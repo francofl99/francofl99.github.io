@@ -1,89 +1,1400 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Franco Fernández Lorio · Full-Stack Developer</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="theme-color" content="#f8fafc" />
+  <title>Franco Fernández Lorio · Senior Full-Stack Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-alt: #eef2ff;
+      --primary: #4f46e5;
+      --secondary: #7c3aed;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --shadow-soft: 0 4px 20px -2px rgba(79, 70, 229, 0.1);
+      --shadow-hover: 0 10px 25px -5px rgba(79, 70, 229, 0.15), 0 8px 10px -6px rgba(79, 70, 229, 0.1);
+      --shadow-button: 0 4px 14px 0 rgba(79, 70, 229, 0.32);
+      --radius-lg: 12px;
+      --radius-sm: 8px;
+      --max-width: 1280px;
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #020617;
+      --surface: #0f172a;
+      --surface-alt: #1e1b4b;
+      --primary: #818cf8;
+      --secondary: #a78bfa;
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --success: #34d399;
+      --shadow-soft: 0 5px 30px -5px rgba(30, 27, 75, 0.75);
+      --shadow-hover: 0 18px 30px -10px rgba(30, 27, 75, 0.85);
+      --shadow-button: 0 6px 20px 0 rgba(129, 140, 248, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .page {
+      position: relative;
+      isolation: isolate;
+      min-height: 100vh;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(72px);
+      opacity: 0.4;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .blob-1 {
+      width: min(60vw, 620px);
+      height: min(60vw, 620px);
+      top: -180px;
+      left: -130px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.95) 0%, rgba(124, 58, 237, 0.32) 65%, transparent 100%);
+    }
+
+    .blob-2 {
+      width: min(44vw, 520px);
+      height: min(44vw, 520px);
+      top: 30%;
+      right: -140px;
+      background: radial-gradient(circle, rgba(52, 211, 153, 0.3) 0%, rgba(99, 102, 241, 0.5) 72%, transparent 100%);
+    }
+
+    .blob-3 {
+      width: min(55vw, 600px);
+      height: min(55vw, 600px);
+      bottom: -200px;
+      left: 35%;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.36) 0%, rgba(99, 102, 241, 0.4) 60%, transparent 100%);
+    }
+
+    .container {
+      width: min(calc(100% - 2rem), var(--max-width));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: saturate(160%) blur(14px);
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+    }
+
+    .nav-inner {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      font-size: 1rem;
+    }
+
+    .brand-dot {
+      width: 2rem;
+      height: 2rem;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 0.75rem;
+      background: linear-gradient(130deg, var(--primary), var(--secondary));
+      color: #ffffff;
+      box-shadow: var(--shadow-button);
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: none;
+      gap: 1.25rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+
+    .toggles {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .chip-btn {
+      min-height: 44px;
+      min-width: 44px;
+      padding: 0.55rem 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--text-main);
+      box-shadow: var(--shadow-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .chip-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-hover);
+      border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+    }
+
+    .chip-btn svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    main {
+      padding-block: clamp(2rem, 4vw, 3.2rem) clamp(4rem, 6vw, 6rem);
+    }
+
+    .hero {
+      display: grid;
+      align-items: center;
+      gap: clamp(1.8rem, 5vw, 4rem);
+      padding-top: 0.5rem;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: color-mix(in srgb, var(--primary) 82%, var(--text-main));
+      background: color-mix(in srgb, var(--primary) 12%, var(--surface));
+      border: 1px solid color-mix(in srgb, var(--primary) 24%, var(--border));
+      width: fit-content;
+    }
+
+    .hero h1 {
+      margin: 1rem 0 1rem;
+      font-size: clamp(2.1rem, 5.6vw, 4rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      max-width: 15ch;
+    }
+
+    .gradient-text {
+      background: linear-gradient(120deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--text-muted);
+      max-width: 58ch;
+      font-size: clamp(1rem, 2vw, 1.08rem);
+    }
+
+    .hero-actions {
+      margin-top: 1.6rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .btn {
+      min-height: 46px;
+      padding: 0.74rem 1.2rem;
+      border-radius: 0.72rem;
+      border: 1px solid transparent;
+      font-weight: 600;
+      font-size: 0.94rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(120deg, var(--primary), var(--secondary));
+      color: #fff;
+      box-shadow: var(--shadow-button);
+    }
+
+    .btn-primary:hover {
+      box-shadow: var(--shadow-hover);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text-main);
+      border-color: var(--border);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn-secondary:hover {
+      border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+      box-shadow: var(--shadow-hover);
+    }
+
+    .availability {
+      margin-top: 1.2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .status-dot {
+      width: 0.68rem;
+      height: 0.68rem;
+      border-radius: 999px;
+      background: var(--success);
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--success) 18%, transparent);
+      animation: pulse 2.8s infinite;
+    }
+
+    .hero-card-wrap {
+      perspective: 2000px;
+      max-width: 560px;
+      justify-self: center;
+      width: 100%;
+    }
+
+    .hero-card {
+      position: relative;
+      background: var(--surface);
+      border-radius: 1rem;
+      border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+      box-shadow: var(--shadow-soft);
+      transform: rotateX(6deg) rotateY(-11deg);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+    }
+
+    .hero-card:hover {
+      transform: rotateX(4deg) rotateY(-8deg) translateY(-6px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      padding: 1.2rem;
+      border-bottom: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+    }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      object-fit: cover;
+      box-shadow: var(--shadow-soft);
+      border: 2px solid color-mix(in srgb, var(--primary) 20%, var(--border));
+    }
+
+    .hero-name {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .hero-role {
+      margin: 0.2rem 0;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+
+    .pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: color-mix(in srgb, var(--primary) 85%, var(--text-main));
+      padding: 0.22rem 0.56rem;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--primary) 10%, var(--surface));
+      border: 1px solid color-mix(in srgb, var(--primary) 24%, var(--border));
+    }
+
+    .mini-stats {
+      padding: 1rem 1.2rem 1.25rem;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .mini-stat {
+      padding: 0.7rem;
+      border-radius: 0.8rem;
+      background: color-mix(in srgb, var(--surface-alt) 55%, var(--surface));
+      border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+    }
+
+    .mini-stat strong {
+      display: block;
+      font-size: 1rem;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .mini-stat span {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    section {
+      padding-top: clamp(3.4rem, 8vw, 5.2rem);
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 1.4rem;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.6rem, 4vw, 2.5rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .section-head p {
+      margin: 0.8rem 0 0;
+      color: var(--text-muted);
+      max-width: 60ch;
+    }
+
+    .stats-grid {
+      display: grid;
+      gap: 0.9rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 1.1rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid color-mix(in srgb, var(--border) 76%, transparent);
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+    }
+
+    .stat-card {
+      padding: 1rem;
+    }
+
+    .stat-card h3 {
+      margin: 0;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-card p {
+      margin: 0.35rem 0 0;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    .services-grid,
+    .projects-grid {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .service-card,
+    .project-card {
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .icon-wrap {
+      width: 2.8rem;
+      height: 2.8rem;
+      border-radius: 0.85rem;
+      background: color-mix(in srgb, var(--primary) 12%, var(--surface));
+      border: 1px solid color-mix(in srgb, var(--primary) 24%, var(--border));
+      display: inline-grid;
+      place-items: center;
+      color: var(--primary);
+    }
+
+    .icon-wrap svg {
+      width: 1.3rem;
+      height: 1.3rem;
+    }
+
+    .service-card h3,
+    .project-card h3 {
+      margin: 0;
+      font-size: 1.06rem;
+      letter-spacing: -0.01em;
+    }
+
+    .service-card p,
+    .project-card p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .tag-list {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.2rem;
+    }
+
+    .tag {
+      font-size: 0.74rem;
+      padding: 0.22rem 0.5rem;
+      border-radius: 999px;
+      font-weight: 600;
+      color: color-mix(in srgb, var(--primary) 82%, var(--text-main));
+      background: color-mix(in srgb, var(--primary) 10%, var(--surface));
+      border: 1px solid color-mix(in srgb, var(--primary) 24%, var(--border));
+    }
+
+    .stack-wrap {
+      margin-top: 1rem;
+      padding: 1rem;
+    }
+
+    .stack-grid {
+      margin-top: 0.75rem;
+      display: grid;
+      gap: 0.8rem;
+      grid-template-columns: 1fr;
+    }
+
+    .stack-group {
+      padding: 0.88rem;
+      border-radius: 0.9rem;
+      border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+      background: color-mix(in srgb, var(--surface-alt) 28%, var(--surface));
+    }
+
+    .stack-group-title {
+      margin: 0 0 0.7rem;
+      font-size: 0.92rem;
+      letter-spacing: -0.01em;
+    }
+
+    .stack-group-grid {
+      display: grid;
+      gap: 0.55rem;
+      grid-template-columns: 1fr;
+    }
+
+    .stack-pill {
+      padding: 0.5rem 0.66rem;
+      border-radius: 0.7rem;
+      border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+      background: color-mix(in srgb, var(--surface-alt) 32%, var(--surface));
+      color: var(--text-main);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .cta {
+      margin-top: clamp(4rem, 8vw, 6rem);
+      padding: clamp(1.4rem, 4vw, 2.2rem);
+      border-radius: 1rem;
+      background: linear-gradient(145deg, #1e1b4b, #0f172a);
+      color: #e2e8f0;
+      box-shadow: 0 18px 45px -20px rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(129, 140, 248, 0.24);
+    }
+
+    .cta h2 {
+      margin: 0;
+      font-size: clamp(1.55rem, 3.2vw, 2.4rem);
+      line-height: 1.15;
+      max-width: 22ch;
+      letter-spacing: -0.02em;
+    }
+
+    .cta p {
+      margin: 0.75rem 0 0;
+      color: #cbd5e1;
+      max-width: 65ch;
+    }
+
+    .cta-actions {
+      margin-top: 1.3rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+
+    .btn-light {
+      min-height: 44px;
+      padding: 0.68rem 1rem;
+      border-radius: 0.68rem;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: rgba(248, 250, 252, 0.96);
+      color: #0f172a;
+      font-weight: 700;
+      font-size: 0.92rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-light:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 18px -12px rgba(148, 163, 184, 0.8);
+    }
+
+    .btn-ghost {
+      min-height: 44px;
+      padding: 0.68rem 1rem;
+      border-radius: 0.68rem;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: #e2e8f0;
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .btn-ghost:hover {
+      transform: translateY(-2px);
+      background: rgba(148, 163, 184, 0.12);
+    }
+
+    .socials {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+
+    .social-link {
+      min-height: 42px;
+      min-width: 42px;
+      padding: 0.5rem 0.8rem;
+      border-radius: 0.65rem;
+      background: color-mix(in srgb, var(--surface) 70%, transparent);
+      border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.38rem;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .social-link:hover {
+      transform: translateY(-2px);
+      border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+      box-shadow: var(--shadow-soft);
+    }
+
+    .social-link svg {
+      width: 15px;
+      height: 15px;
+      color: var(--primary);
+    }
+
+    footer {
+      margin-top: 2rem;
+      padding-bottom: 0.5rem;
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      text-align: center;
+    }
+
+    .focus-visible:focus-visible,
+    a:focus-visible,
+    button:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 52%, transparent);
+    }
+
+    @keyframes pulse {
+      0%,
+      100% {
+        box-shadow: 0 0 0 6px color-mix(in srgb, var(--success) 18%, transparent);
+      }
+      50% {
+        box-shadow: 0 0 0 10px color-mix(in srgb, var(--success) 8%, transparent);
+      }
+    }
+
+    @media (min-width: 760px) {
+      .nav-links {
+        display: flex;
+      }
+
+      .hero {
+        grid-template-columns: 1.05fr 0.95fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .services-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .projects-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .stack-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .stack-group-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 759px) {
+      .hero-card {
+        transform: none;
+      }
+
+      .hero-card:hover {
+        transform: translateY(-4px);
+      }
+
+      .mini-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
-  <!-- Header -->
-  <header class="w-full py-10 bg-gradient-to-b from-gray-100 to-gray-50">
-    <div class="max-w-5xl mx-auto px-6 text-center flex flex-col items-center">
-      <img src="/public/profile.jpeg" class="w-40 h-40 rounded-full object-cover shadow-lg border-4 border-white" alt="Franco Fernández Lorio" />
-      <h1 class="text-4xl font-bold text-gray-900 mt-6">Franco Fernández Lorio</h1>
-      <p class="text-xl text-gray-600 mt-2">Senior Full-Stack Developer · Technical Lead</p>
-      <p class="text-gray-500 mt-1">Laravel · Vue 2→3 · AWS Serverless · CI/CD · TDD</p>
-    </div>
-  </header>
+<body>
+  <div class="page">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
 
-  <!-- About Section -->
-  <section class="max-w-5xl mx-auto px-6 mt-12">
-    <h2 class="text-2xl font-semibold mb-4">About Me</h2>
-    <p class="text-gray-700 leading-relaxed">
-      Soy un Full-Stack Developer y Technical Lead con más de nueve años construyendo y escalando aplicaciones reales,
-      productos complejos y plataformas de alto impacto. Trabajo tanto en backend (Laravel, Node.js) como en frontend
-      (Vue.js/TypeScript), y tengo experiencia sólida en AWS serverless, CI/CD y automatización.
-      <br /><br />
-      Me especializo en resolver problemas complejos con arquitecturas limpias, escalables y mantenibles. Lideré equipos
-      técnicos durante los últimos cuatro años, estableciendo estándares, buenas prácticas y calidad de ingeniería.
-    </p>
-  </section>
+    <header class="nav" aria-label="Main Navigation">
+      <div class="container nav-inner">
+        <a href="#top" class="brand" aria-label="Franco Fernández Lorio home">
+          <span class="brand-dot" aria-hidden="true">FF</span>
+          <span>Franco Fernández Lorio</span>
+        </a>
 
-  <!-- Services Section -->
-  <section class="max-w-5xl mx-auto px-6 mt-16">
-    <h2 class="text-2xl font-semibold mb-6">What I Do</h2>
-    <div class="grid md:grid-cols-2 gap-6">
-      <div class="p-6 bg-white rounded-xl shadow">
-        <h3 class="text-lg font-semibold mb-2">Desarrollo Full-Stack</h3>
-        <p class="text-gray-600">Construcción de módulos, features y aplicaciones completas en Laravel + Vue.js, incluyendo migraciones de Vue 2 a 3.</p>
+        <nav class="nav-links" aria-label="Primary">
+          <a href="#about" data-i18n="nav.about">About</a>
+          <a href="#services" data-i18n="nav.services">Services</a>
+          <a href="#projects" data-i18n="nav.projects">Impact</a>
+          <a href="#contact" data-i18n="nav.contact">Contact</a>
+        </nav>
+
+        <div class="toggles">
+          <button id="langToggle" class="chip-btn focus-visible" type="button" aria-label="Switch language">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M5 8h14" />
+              <path d="M9 4h6" />
+              <path d="M8 12l4 8 4-8" />
+            </svg>
+            <span id="langLabel">ES</span>
+          </button>
+          <button id="themeToggle" class="chip-btn focus-visible" type="button" aria-label="Toggle theme">
+            <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M12 3a6.5 6.5 0 1 0 9 9A9 9 0 1 1 12 3z" />
+            </svg>
+            <span id="themeLabel">Dark</span>
+          </button>
+        </div>
       </div>
+    </header>
 
-      <div class="p-6 bg-white rounded-xl shadow">
-        <h3 class="text-lg font-semibold mb-2">Arquitectura & Consultoría</h3>
-        <p class="text-gray-600">Revisión técnica, mejoras de performance, escalabilidad, refactorizaciones y diseño de arquitecturas modernas.</p>
-      </div>
+    <main id="top" class="container">
+      <section class="hero" aria-label="Hero">
+        <div>
+          <div class="eyebrow" data-i18n="hero.eyebrow">Available for high-impact projects</div>
+          <h1>
+            <span data-i18n="hero.titleStart">Building products with</span>
+            <span class="gradient-text" data-i18n="hero.titleGradient">senior engineering precision</span>
+          </h1>
+          <p data-i18n="hero.description">
+            Senior Full-Stack Developer and Technical Lead with 9+ years shipping scalable products with Laravel, Vue, TypeScript, and AWS serverless architecture.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:francofernandezlorio@gmail.com" data-i18n="hero.primaryCta">Start a project</a>
+            <a class="btn btn-secondary" href="#projects" data-i18n="hero.secondaryCta">See outcomes</a>
+          </div>
+          <div class="availability">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span data-i18n="hero.availability">Open to consulting and technical leadership engagements.</span>
+          </div>
+        </div>
 
-      <div class="p-6 bg-white rounded-xl shadow">
-        <h3 class="text-lg font-semibold mb-2">Integraciones Complejas</h3>
-        <p class="text-gray-600">WhatsApp API, Meta/FB, Slack bots, AWS AppSync, GraphQL.</p>
-      </div>
+        <div class="hero-card-wrap">
+          <article class="hero-card" aria-label="Profile overview">
+            <div class="hero-grid">
+              <img src="./public/profile.jpeg" class="avatar" id="profileImage" alt="Portrait of Franco Fernández Lorio" />
+              <div>
+                <h2 class="hero-name">Franco Fernández Lorio</h2>
+                <p class="hero-role" data-i18n="hero.cardRole">Senior Full-Stack Developer · Technical Lead</p>
+                <div class="pills" id="heroPills"></div>
+              </div>
+            </div>
+            <div class="mini-stats" id="miniStats"></div>
+          </article>
+        </div>
+      </section>
 
-      <div class="p-6 bg-white rounded-xl shadow">
-        <h3 class="text-lg font-semibold mb-2">CI/CD, AWS & DevOps</h3>
-        <p class="text-gray-600">Pipelines, automatización, Docker, serverless (Lambda, DynamoDB, Cognito, S3).</p>
-      </div>
-    </div>
-  </section>
+      <section id="about" aria-labelledby="aboutTitle">
+        <div class="section-head">
+          <h2 id="aboutTitle" data-i18n="about.title">Trust-driven execution with startup speed</h2>
+          <p data-i18n="about.description">
+            I lead product engineering end-to-end, balancing architecture quality, delivery speed, and team health.
+          </p>
+        </div>
+        <div class="stats-grid" id="statsGrid"></div>
+      </section>
 
-  <!-- Tech Stack -->
-  <section class="max-w-5xl mx-auto px-6 mt-16">
-    <h2 class="text-2xl font-semibold mb-6">Tech Stack</h2>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-gray-700 text-center">
-      <div class="p-4 bg-white rounded shadow">Laravel</div>
-      <div class="p-4 bg-white rounded shadow">Vue.js (2→3)</div>
-      <div class="p-4 bg-white rounded shadow">TypeScript</div>
-      <div class="p-4 bg-white rounded shadow">Node.js</div>
-      <div class="p-4 bg-white rounded shadow">AWS Serverless</div>
-      <div class="p-4 bg-white rounded shadow">GraphQL</div>
-      <div class="p-4 bg-white rounded shadow">Docker</div>
-      <div class="p-4 bg-white rounded shadow">CI/CD</div>
-    </div>
-  </section>
+      <section id="services" aria-labelledby="servicesTitle">
+        <div class="section-head">
+          <h2 id="servicesTitle" data-i18n="services.title">How I can help your team</h2>
+          <p data-i18n="services.description">
+            Flexible collaboration model across delivery, architecture, and technical leadership.
+          </p>
+        </div>
+        <div class="services-grid" id="servicesGrid"></div>
+      </section>
 
-  <!-- Contact -->
-  <section class="max-w-5xl mx-auto px-6 mt-20 mb-24 text-center">
-    <h2 class="text-3xl font-semibold mb-4">Let's Work Together</h2>
-    <p class="text-lg text-gray-700 mb-6">Si querés que trabaje en tu proyecto, integraciones, consultoría o soporte técnico puntual, podés contactarme aquí:</p>
-    <a href="mailto:francofernandezlorio@gmail.com" class="inline-block px-8 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">Contactar por Email</a>
+      <section id="projects" aria-labelledby="projectsTitle">
+        <div class="section-head">
+          <h2 id="projectsTitle" data-i18n="projects.title">Selected outcomes</h2>
+          <p data-i18n="projects.description">
+            Impact-focused work across product modernization, platform architecture, and operational excellence.
+          </p>
+        </div>
+        <div class="projects-grid" id="projectsGrid"></div>
+      </section>
 
-    <div class="mt-8 flex justify-center gap-6 text-lg">
-      <a href="https://www.linkedin.com/in/franco-fernandez-lorio-38b2b122a/" class="text-blue-700 hover:underline">LinkedIn</a>
-      <a href="https://github.com/francofl99" class="hover:underline">GitHub</a>
-      <a href="https://x.com/franco_lorio" class="text-blue-500 hover:underline">Twitter</a>
-      <a href="https://dev.to/frandev" class="text-blue-500 hover:underline">Dev.to</a>
-    </div>
-  </section>
+      <section aria-labelledby="stackTitle">
+        <div class="section-head">
+          <h2 id="stackTitle" data-i18n="stack.title">Core stack and delivery toolkit</h2>
+          <p data-i18n="stack.description">Technologies I use daily to ship reliable and maintainable software.</p>
+        </div>
+        <article class="card stack-wrap">
+          <div class="stack-grid" id="stackGrid"></div>
+        </article>
+      </section>
 
+      <section id="contact" class="cta" aria-labelledby="contactTitle">
+        <h2 id="contactTitle" data-i18n="contact.title">Need a senior engineer who can lead and deliver?</h2>
+        <p data-i18n="contact.description">
+          Let's discuss your roadmap, bottlenecks, or migration plan and define a practical path to execution.
+        </p>
+        <div class="cta-actions">
+          <a class="btn-light" href="mailto:francofernandezlorio@gmail.com" data-i18n="contact.primary">Email me</a>
+          <button class="btn-ghost" id="copyEmailBtn" type="button" data-i18n="contact.secondary">Copy email</button>
+        </div>
+
+        <div class="socials" aria-label="Social links">
+          <a class="social-link" href="https://www.linkedin.com/in/franco-fernandez-lorio-38b2b122a/" target="_blank" rel="noreferrer noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            <span>LinkedIn</span>
+          </a>
+          <a class="social-link" href="https://github.com/francofl99" target="_blank" rel="noreferrer noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3"></path><path d="M15 22v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.77 5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.38 13.38 0 0 0-7 0C5.27.63 4.09.98 4.09.98A5.07 5.07 0 0 0 4 4.75a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 6.96A3.37 3.37 0 0 0 8 18.13V22"></path></svg>
+            <span>GitHub</span>
+          </a>
+          <a class="social-link" href="https://x.com/franco_lorio" target="_blank" rel="noreferrer noopener" aria-label="X">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4l11.4 16H20L8.6 4z"></path><path d="M4 20l6.8-7.2"></path><path d="M13.2 11.6L20 4"></path></svg>
+            <span>X</span>
+          </a>
+          <a class="social-link" href="https://dev.to/frandev" target="_blank" rel="noreferrer noopener" aria-label="Dev.to">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M7 8v8"></path><path d="M12 8l3 4-3 4"></path><path d="M16.5 8h1.8"></path></svg>
+            <span>Dev.to</span>
+          </a>
+        </div>
+      </section>
+
+      <footer>
+        <span id="footerText">© <span id="year"></span> Franco Fernández Lorio · Built with performance and clarity in mind.</span>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const EMAIL = "francofernandezlorio@gmail.com";
+
+    const dictionary = {
+      en: {
+        metaTitle: "Franco Fernández Lorio · Senior Full-Stack Developer",
+        nav: {
+          about: "About",
+          services: "Services",
+          projects: "Impact",
+          contact: "Contact"
+        },
+        hero: {
+          eyebrow: "Available for high-impact projects",
+          titleStart: "Building products with",
+          titleGradient: "senior engineering precision",
+          description: "Senior Full-Stack Developer and Technical Lead with 9+ years shipping scalable products with Laravel, Vue, TypeScript, and AWS serverless architecture.",
+          primaryCta: "Start a project",
+          secondaryCta: "See outcomes",
+          availability: "Open to consulting and technical leadership engagements.",
+          cardRole: "Senior Full-Stack Developer · Technical Lead",
+          pills: ["Laravel", "Vue 2→3", "AWS", "CI/CD"],
+          miniStats: [
+            { value: "9+", label: "Years shipping products" },
+            { value: "4", label: "Years leading teams" },
+            { value: "20+", label: "Complex integrations" }
+          ]
+        },
+        about: {
+          title: "Trust-driven execution with startup speed",
+          description: "I lead product engineering end-to-end, balancing architecture quality, delivery speed, and team health.",
+          stats: [
+            { value: "10M+", label: "Events processed in production" },
+            { value: "-45%", label: "Lead-time reduction in delivery flows" },
+            { value: "99.9%", label: "Availability targets in critical services" },
+            { value: "5x", label: "Faster onboarding with standards & playbooks" }
+          ]
+        },
+        services: {
+          title: "How I can help your team",
+          description: "Flexible collaboration model across delivery, architecture, and technical leadership.",
+          items: [
+            {
+              icon: "code",
+              title: "Full-Stack Product Delivery",
+              description: "End-to-end development of features and products with Laravel, Vue, TypeScript, and robust backend practices."
+            },
+            {
+              icon: "layers",
+              title: "Architecture and Modernization",
+              description: "Technical diagnostics, scaling plans, refactoring strategy, and migrations from legacy code to maintainable systems."
+            },
+            {
+              icon: "link",
+              title: "Complex Integrations",
+              description: "WhatsApp API, Meta, Slack bots, GraphQL, and event-driven workflows with high reliability."
+            },
+            {
+              icon: "settings",
+              title: "AWS, CI/CD and DevOps",
+              description: "Serverless infrastructure, deployment pipelines, automated quality gates, and observability workflows."
+            }
+          ]
+        },
+        projects: {
+          title: "Selected outcomes",
+          description: "Outcome-focused work in AI messaging, omnichannel communication, and enterprise integrations.",
+          items: [
+            {
+              title: "AI chatbot integration in messaging flows",
+              description: "Implemented chatbot capabilities with artificial intelligence inside operational messaging flows to improve automation and response quality.",
+              tags: ["AI", "Messaging", "Automation"]
+            },
+            {
+              title: "WhatsApp API-driven functionality",
+              description: "Delivered product features powered by WhatsApp API integrations, enabling reliable communication workflows across customer touchpoints.",
+              tags: ["WhatsApp API", "Integrations", "Product"]
+            },
+            {
+              title: "Enterprise API integrations (Salesforce / HubSpot)",
+              description: "Built and maintained integrations with large platforms such as Salesforce and HubSpot to synchronize data and business processes.",
+              tags: ["Salesforce", "HubSpot", "APIs"]
+            }
+          ]
+        },
+        stack: {
+          title: "Core stack and delivery toolkit",
+          description: "Technologies and engineering practices I use to deliver production-ready software end-to-end.",
+          groups: [
+            {
+              title: "Backend",
+              items: [
+                "PHP / Laravel",
+                "Node.js",
+                "TypeScript",
+                "REST APIs",
+                "Python",
+                "Relational and non-relational databases (MySQL, MongoDB, PostgreSQL, SQLite)"
+              ]
+            },
+            {
+              title: "Frontend",
+              items: [
+                "Vue.js (Vue 2 & Vue 3)",
+                "React",
+                "React Native",
+                "Angular",
+                "JavaScript",
+                "TypeScript",
+                "Tailwind CSS",
+                "CSS",
+                "HTML",
+                "jQuery"
+              ]
+            },
+            {
+              title: "Cloud & DevOps",
+              items: [
+                "AWS",
+                "Docker",
+                "CI/CD (GitHub Actions, Jenkins)",
+                "Monitoring tools"
+              ]
+            },
+            {
+              title: "Ways of working",
+              items: [
+                "TDD",
+                "DDD",
+                "Hexagonal Architecture",
+                "Clean Code",
+                "Clean Architecture",
+                "SOLID",
+                "Production-ready deliverables with successful estimations",
+                "End-to-end objective development"
+              ]
+            }
+          ]
+        },
+        contact: {
+          title: "Need a senior engineer who can lead and deliver?",
+          description: "Let's discuss your roadmap, bottlenecks, or migration plan and define a practical path to execution.",
+          primary: "Email me",
+          secondary: "Copy email",
+          copied: "Email copied"
+        },
+        footer: "Built with performance and clarity in mind.",
+        toggles: {
+          langButton: "Switch language to Spanish",
+          themeDark: "Dark",
+          themeLight: "Light",
+          themeAriaDark: "Switch to dark mode",
+          themeAriaLight: "Switch to light mode"
+        },
+        imageAlt: "Portrait of Franco Fernández Lorio"
+      },
+      es: {
+        metaTitle: "Franco Fernández Lorio · Desarrollador Full-Stack Senior",
+        nav: {
+          about: "Sobre mí",
+          services: "Servicios",
+          projects: "Impacto",
+          contact: "Contacto"
+        },
+        hero: {
+          eyebrow: "Disponible para proyectos de alto impacto",
+          titleStart: "Construyo productos con",
+          titleGradient: "precisión de ingeniería senior",
+          description: "Senior Full-Stack Developer y Technical Lead con más de 9 años creando productos escalables usando Laravel, Vue, TypeScript y arquitectura serverless en AWS.",
+          primaryCta: "Iniciar proyecto",
+          secondaryCta: "Ver resultados",
+          availability: "Abierto a consultoría y liderazgo técnico por proyecto.",
+          cardRole: "Senior Full-Stack Developer · Technical Lead",
+          pills: ["Laravel", "Vue 2→3", "AWS", "CI/CD"],
+          miniStats: [
+            { value: "9+", label: "Años entregando productos" },
+            { value: "4", label: "Años liderando equipos" },
+            { value: "20+", label: "Integraciones complejas" }
+          ]
+        },
+        about: {
+          title: "Ejecución confiable con velocidad startup",
+          description: "Lidero ingeniería de producto de punta a punta, equilibrando calidad arquitectónica, velocidad de entrega y salud del equipo.",
+          stats: [
+            { value: "10M+", label: "Eventos procesados en producción" },
+            { value: "-45%", label: "Reducción de lead-time en flujos de entrega" },
+            { value: "99.9%", label: "Objetivos de disponibilidad en servicios críticos" },
+            { value: "5x", label: "Onboarding más rápido con estándares y playbooks" }
+          ]
+        },
+        services: {
+          title: "Cómo puedo ayudar a tu equipo",
+          description: "Modelo de colaboración flexible para delivery, arquitectura y liderazgo técnico.",
+          items: [
+            {
+              icon: "code",
+              title: "Delivery Full-Stack",
+              description: "Desarrollo end-to-end de features y productos con Laravel, Vue, TypeScript y buenas prácticas backend."
+            },
+            {
+              icon: "layers",
+              title: "Arquitectura y Modernización",
+              description: "Diagnóstico técnico, planes de escalabilidad, refactors estratégicos y migraciones desde código legacy."
+            },
+            {
+              icon: "link",
+              title: "Integraciones Complejas",
+              description: "WhatsApp API, Meta, bots de Slack, GraphQL y flujos event-driven con alta confiabilidad."
+            },
+            {
+              icon: "settings",
+              title: "AWS, CI/CD y DevOps",
+              description: "Infraestructura serverless, pipelines de despliegue, quality gates automatizados y observabilidad."
+            }
+          ]
+        },
+        projects: {
+          title: "Resultados destacados",
+          description: "Trabajo orientado a resultados en mensajería con IA, comunicación omnicanal e integraciones empresariales.",
+          items: [
+            {
+              title: "Integración de chatbots con IA en flujos de mensajería",
+              description: "Implementé capacidades de chatbot con inteligencia artificial dentro de flujos de mensajería operativos para mejorar automatización y calidad de respuesta.",
+              tags: ["IA", "Mensajería", "Automatización"]
+            },
+            {
+              title: "Funcionalidades integradas con WhatsApp API",
+              description: "Desarrollé funcionalidades de producto sobre integraciones con WhatsApp API, habilitando flujos de comunicación confiables en distintos puntos de contacto.",
+              tags: ["WhatsApp API", "Integraciones", "Producto"]
+            },
+            {
+              title: "Integraciones de APIs empresariales (Salesforce / HubSpot)",
+              description: "Construí y mantuve integraciones con plataformas grandes como Salesforce y HubSpot para sincronizar datos y procesos de negocio.",
+              tags: ["Salesforce", "HubSpot", "APIs"]
+            }
+          ]
+        },
+        stack: {
+          title: "Stack principal y toolkit de entrega",
+          description: "Tecnologías y prácticas de ingeniería que uso para entregar software productivo de punta a punta.",
+          groups: [
+            {
+              title: "Backend",
+              items: [
+                "PHP / Laravel",
+                "Node.js",
+                "TypeScript",
+                "REST APIs",
+                "Python",
+                "Bases de datos relacionales y no relacionales (MySQL, MongoDB, PostgreSQL, SQLite)"
+              ]
+            },
+            {
+              title: "Frontend",
+              items: [
+                "Vue.js (Vue 2 y Vue 3)",
+                "React",
+                "React Native",
+                "Angular",
+                "JavaScript",
+                "TypeScript",
+                "Tailwind CSS",
+                "CSS",
+                "HTML",
+                "jQuery"
+              ]
+            },
+            {
+              title: "Cloud y DevOps",
+              items: [
+                "AWS",
+                "Docker",
+                "CI/CD (GitHub Actions, Jenkins)",
+                "Herramientas de monitoreo"
+              ]
+            },
+            {
+              title: "Formas de trabajo",
+              items: [
+                "TDD",
+                "DDD",
+                "Arquitectura Hexagonal",
+                "Clean Code",
+                "Clean Architecture",
+                "SOLID",
+                "Entregables en producción con estimaciones exitosas",
+                "Desarrollo de objetivos de punta a punta"
+              ]
+            }
+          ]
+        },
+        contact: {
+          title: "¿Necesitás un senior que lidere y entregue?",
+          description: "Podemos revisar tu roadmap, cuellos de botella o plan de migración y definir un camino práctico de ejecución.",
+          primary: "Escribirme por email",
+          secondary: "Copiar email",
+          copied: "Email copiado"
+        },
+        footer: "Construido con foco en rendimiento y claridad.",
+        toggles: {
+          langButton: "Cambiar idioma a inglés",
+          themeDark: "Oscuro",
+          themeLight: "Claro",
+          themeAriaDark: "Cambiar a modo oscuro",
+          themeAriaLight: "Cambiar a modo claro"
+        },
+        imageAlt: "Foto de Franco Fernández Lorio"
+      }
+    };
+
+    const iconMap = {
+      code: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></svg>',
+      layers: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2l10 5-10 5L2 7l10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
+      link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 1 0-7.07-7.07L11 5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 1 0 7.07 7.07L13 19"/></svg>',
+      settings: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1 .6 1.65 1.65 0 0 0-.33 1.82V22a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-.33-1.82 1.65 1.65 0 0 0-1-.6 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-.6-1 1.65 1.65 0 0 0-1.82-.33H2a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.82-.33 1.65 1.65 0 0 0 .6-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-.6 1.65 1.65 0 0 0 .33-1.82V2a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 .33 1.82 1.65 1.65 0 0 0 1 .6 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.21.3.37.64.46 1a1.65 1.65 0 0 0 1.14 1.15H22a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.82.33c-.3.21-.64.37-1 .46z"/></svg>'
+    };
+
+    const nodes = {
+      langToggle: document.getElementById("langToggle"),
+      langLabel: document.getElementById("langLabel"),
+      themeToggle: document.getElementById("themeToggle"),
+      themeLabel: document.getElementById("themeLabel"),
+      themeIcon: document.getElementById("themeIcon"),
+      heroPills: document.getElementById("heroPills"),
+      miniStats: document.getElementById("miniStats"),
+      statsGrid: document.getElementById("statsGrid"),
+      servicesGrid: document.getElementById("servicesGrid"),
+      projectsGrid: document.getElementById("projectsGrid"),
+      stackGrid: document.getElementById("stackGrid"),
+      copyEmailBtn: document.getElementById("copyEmailBtn"),
+      footerText: document.getElementById("footerText"),
+      profileImage: document.getElementById("profileImage")
+    };
+
+    const themeIcons = {
+      dark: '<path d="M12 3a6.5 6.5 0 1 0 9 9A9 9 0 1 1 12 3z"/>',
+      light: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>'
+    };
+
+    const langStorageKey = "portfolio-language";
+    const themeStorageKey = "portfolio-theme";
+
+    function get(path, source) {
+      return path.split(".").reduce((acc, part) => acc && acc[part], source);
+    }
+
+    function renderArray(items, renderer) {
+      return items.map(renderer).join("");
+    }
+
+    function renderCards(lang) {
+      const content = dictionary[lang];
+
+      nodes.heroPills.innerHTML = renderArray(content.hero.pills, (pill) => `<span class="pill">${pill}</span>`);
+      nodes.miniStats.innerHTML = renderArray(
+        content.hero.miniStats,
+        (item) => `<article class="mini-stat"><strong>${item.value}</strong><span>${item.label}</span></article>`
+      );
+
+      nodes.statsGrid.innerHTML = renderArray(
+        content.about.stats,
+        (item) => `<article class="card stat-card"><h3>${item.value}</h3><p>${item.label}</p></article>`
+      );
+
+      nodes.servicesGrid.innerHTML = renderArray(
+        content.services.items,
+        (item) => `
+          <article class="card service-card">
+            <span class="icon-wrap" aria-hidden="true">${iconMap[item.icon] ?? iconMap.code}</span>
+            <h3>${item.title}</h3>
+            <p>${item.description}</p>
+          </article>`
+      );
+
+      nodes.projectsGrid.innerHTML = renderArray(
+        content.projects.items,
+        (item) => `
+          <article class="card project-card">
+            <h3>${item.title}</h3>
+            <p>${item.description}</p>
+            <div class="tag-list">${renderArray(item.tags, (tag) => `<span class="tag">${tag}</span>`)}</div>
+          </article>`
+      );
+
+      nodes.stackGrid.innerHTML = renderArray(
+        content.stack.groups,
+        (group) => `
+          <article class="stack-group">
+            <h3 class="stack-group-title">${group.title}</h3>
+            <div class="stack-group-grid">${renderArray(group.items, (item) => `<span class="stack-pill">${item}</span>`)}</div>
+          </article>`
+      );
+      nodes.profileImage.alt = content.imageAlt;
+      nodes.footerText.innerHTML = `© <span id="year">${new Date().getFullYear()}</span> Franco Fernández Lorio · ${content.footer}`;
+    }
+
+    function applyTranslations(lang) {
+      document.documentElement.lang = lang;
+      const content = dictionary[lang];
+      document.title = content.metaTitle;
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        const value = get(key, content);
+        if (typeof value === "string") {
+          node.textContent = value;
+        }
+      });
+
+      nodes.langLabel.textContent = lang === "en" ? "ES" : "EN";
+      nodes.langToggle.setAttribute("aria-label", content.toggles.langButton);
+
+      renderCards(lang);
+      localStorage.setItem(langStorageKey, lang);
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      const lang = document.documentElement.lang in dictionary ? document.documentElement.lang : "en";
+      const content = dictionary[lang];
+      const isDark = theme === "dark";
+
+      nodes.themeLabel.textContent = isDark ? content.toggles.themeLight : content.toggles.themeDark;
+      nodes.themeToggle.setAttribute("aria-label", isDark ? content.toggles.themeAriaLight : content.toggles.themeAriaDark);
+      nodes.themeIcon.innerHTML = isDark ? themeIcons.light : themeIcons.dark;
+      document.querySelector('meta[name="theme-color"]').setAttribute("content", isDark ? "#020617" : "#f8fafc");
+
+      localStorage.setItem(themeStorageKey, theme);
+    }
+
+    function initialLanguage() {
+      const saved = localStorage.getItem(langStorageKey);
+      if (saved === "es" || saved === "en") {
+        return saved;
+      }
+      const browserLang = (navigator.language || "en").toLowerCase();
+      return browserLang.startsWith("es") ? "es" : "en";
+    }
+
+    function initialTheme() {
+      const saved = localStorage.getItem(themeStorageKey);
+      if (saved === "dark" || saved === "light") {
+        return saved;
+      }
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+
+    nodes.langToggle.addEventListener("click", () => {
+      const next = document.documentElement.lang === "es" ? "en" : "es";
+      applyTranslations(next);
+      applyTheme(document.documentElement.getAttribute("data-theme") || "light");
+    });
+
+    nodes.themeToggle.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      const next = current === "dark" ? "light" : "dark";
+      applyTheme(next);
+    });
+
+    nodes.copyEmailBtn.addEventListener("click", async () => {
+      const lang = document.documentElement.lang in dictionary ? document.documentElement.lang : "en";
+      const buttonLabel = dictionary[lang].contact.secondary;
+      const copiedLabel = dictionary[lang].contact.copied;
+
+      try {
+        await navigator.clipboard.writeText(EMAIL);
+        nodes.copyEmailBtn.textContent = copiedLabel;
+        setTimeout(() => {
+          nodes.copyEmailBtn.textContent = buttonLabel;
+        }, 1600);
+      } catch (_error) {
+        window.location.href = `mailto:${EMAIL}`;
+      }
+    });
+
+    applyTranslations(initialLanguage());
+    applyTheme(initialTheme());
+  </script>
 </body>
 </html>

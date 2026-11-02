@@ -1,1400 +1,1207 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="light">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#f8fafc" />
-  <title>Franco Fernández Lorio · Senior Full-Stack Developer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      color-scheme: light;
-      --bg: #f8fafc;
-      --surface: #ffffff;
-      --surface-alt: #eef2ff;
-      --primary: #4f46e5;
-      --secondary: #7c3aed;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --success: #10b981;
-      --shadow-soft: 0 4px 20px -2px rgba(79, 70, 229, 0.1);
-      --shadow-hover: 0 10px 25px -5px rgba(79, 70, 229, 0.15), 0 8px 10px -6px rgba(79, 70, 229, 0.1);
-      --shadow-button: 0 4px 14px 0 rgba(79, 70, 229, 0.32);
-      --radius-lg: 12px;
-      --radius-sm: 8px;
-      --max-width: 1280px;
-    }
-
-    html[data-theme="dark"] {
-      color-scheme: dark;
-      --bg: #020617;
-      --surface: #0f172a;
-      --surface-alt: #1e1b4b;
-      --primary: #818cf8;
-      --secondary: #a78bfa;
-      --text-main: #e2e8f0;
-      --text-muted: #94a3b8;
-      --border: #1e293b;
-      --success: #34d399;
-      --shadow-soft: 0 5px 30px -5px rgba(30, 27, 75, 0.75);
-      --shadow-hover: 0 18px 30px -10px rgba(30, 27, 75, 0.85);
-      --shadow-button: 0 6px 20px 0 rgba(129, 140, 248, 0.45);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      font-family: "Plus Jakarta Sans", sans-serif;
-      background: var(--bg);
-      color: var(--text-main);
-      line-height: 1.65;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    .page {
-      position: relative;
-      isolation: isolate;
-      min-height: 100vh;
-    }
-
-    .blob {
-      position: absolute;
-      border-radius: 999px;
-      filter: blur(72px);
-      opacity: 0.4;
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    .blob-1 {
-      width: min(60vw, 620px);
-      height: min(60vw, 620px);
-      top: -180px;
-      left: -130px;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.95) 0%, rgba(124, 58, 237, 0.32) 65%, transparent 100%);
-    }
-
-    .blob-2 {
-      width: min(44vw, 520px);
-      height: min(44vw, 520px);
-      top: 30%;
-      right: -140px;
-      background: radial-gradient(circle, rgba(52, 211, 153, 0.3) 0%, rgba(99, 102, 241, 0.5) 72%, transparent 100%);
-    }
-
-    .blob-3 {
-      width: min(55vw, 600px);
-      height: min(55vw, 600px);
-      bottom: -200px;
-      left: 35%;
-      background: radial-gradient(circle, rgba(168, 85, 247, 0.36) 0%, rgba(99, 102, 241, 0.4) 60%, transparent 100%);
-    }
-
-    .container {
-      width: min(calc(100% - 2rem), var(--max-width));
-      margin: 0 auto;
-    }
-
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: saturate(160%) blur(14px);
-      background: color-mix(in srgb, var(--bg) 85%, transparent);
-      border-bottom: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
-    }
-
-    .nav-inner {
-      min-height: 74px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      font-size: 1rem;
-    }
-
-    .brand-dot {
-      width: 2rem;
-      height: 2rem;
-      display: inline-grid;
-      place-items: center;
-      border-radius: 0.75rem;
-      background: linear-gradient(130deg, var(--primary), var(--secondary));
-      color: #ffffff;
-      box-shadow: var(--shadow-button);
-      font-size: 0.8rem;
-      font-weight: 800;
-    }
-
-    .nav-links {
-      display: none;
-      gap: 1.25rem;
-      color: var(--text-muted);
-      font-weight: 500;
-      font-size: 0.95rem;
-    }
-
-    .nav-links a {
-      transition: color 0.2s ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--text-main);
-    }
-
-    .toggles {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .chip-btn {
-      min-height: 44px;
-      min-width: 44px;
-      padding: 0.55rem 0.8rem;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: var(--surface);
-      color: var(--text-main);
-      box-shadow: var(--shadow-soft);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      font-size: 0.84rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    }
-
-    .chip-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-hover);
-      border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
-    }
-
-    .chip-btn svg {
-      width: 16px;
-      height: 16px;
-      flex-shrink: 0;
-    }
-
-    main {
-      padding-block: clamp(2rem, 4vw, 3.2rem) clamp(4rem, 6vw, 6rem);
-    }
-
-    .hero {
-      display: grid;
-      align-items: center;
-      gap: clamp(1.8rem, 5vw, 4rem);
-      padding-top: 0.5rem;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.35rem 0.8rem;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: color-mix(in srgb, var(--primary) 82%, var(--text-main));
-      background: color-mix(in srgb, var(--primary) 12%, var(--surface));
-      border: 1px solid color-mix(in srgb, var(--primary) 24%, var(--border));
-      width: fit-content;
-    }
-
-    .hero h1 {
-      margin: 1rem 0 1rem;
-      font-size: clamp(2.1rem, 5.6vw, 4rem);
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-      max-width: 15ch;
-    }
-
-    .gradient-text {
-      background: linear-gradient(120deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .hero p {
-      margin: 0;
-      color: var(--text-muted);
-      max-width: 58ch;
-      font-size: clamp(1rem, 2vw, 1.08rem);
-    }
-
-    .hero-actions {
-      margin-top: 1.6rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-    }
-
-    .btn {
-      min-height: 46px;
-      padding: 0.74rem 1.2rem;
-      border-radius: 0.72rem;
-      border: 1px solid transparent;
-      font-weight: 600;
-      font-size: 0.94rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.45rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .btn-primary {
-      background: linear-gradient(120deg, var(--primary), var(--secondary));
-      color: #fff;
-      box-shadow: var(--shadow-button);
-    }
-
-    .btn-primary:hover {
-      box-shadow: var(--shadow-hover);
-    }
-
-    .btn-secondary {
-      background: var(--surface);
-      color: var(--text-main);
-      border-color: var(--border);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .btn-secondary:hover {
-      border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
-      box-shadow: var(--shadow-hover);
-    }
-
-    .availability {
-      margin-top: 1.2rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      font-size: 0.88rem;
-      color: var(--text-muted);
-    }
-
-    .status-dot {
-      width: 0.68rem;
-      height: 0.68rem;
-      border-radius: 999px;
-      background: var(--success);
-      box-shadow: 0 0 0 6px color-mix(in srgb, var(--success) 18%, transparent);
-      animation: pulse 2.8s infinite;
-    }
-
-    .hero-card-wrap {
-      perspective: 2000px;
-      max-width: 560px;
-      justify-self: center;
-      width: 100%;
-    }
-
-    .hero-card {
-      position: relative;
-      background: var(--surface);
-      border-radius: 1rem;
-      border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
-      box-shadow: var(--shadow-soft);
-      transform: rotateX(6deg) rotateY(-11deg);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      overflow: hidden;
-    }
-
-    .hero-card:hover {
-      transform: rotateX(4deg) rotateY(-8deg) translateY(-6px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 1rem;
-      padding: 1.2rem;
-      border-bottom: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
-    }
-
-    .avatar {
-      width: 72px;
-      height: 72px;
-      border-radius: 18px;
-      object-fit: cover;
-      box-shadow: var(--shadow-soft);
-      border: 2px solid color-mix(in srgb, var(--primary) 20%, var(--border));
-    }
-
-    .hero-name {
-      margin: 0;
-      font-size: 1.1rem;
-      font-weight: 700;
-    }
-
-    .hero-role {
-      margin: 0.2rem 0;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    .pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 0.5rem;
-    }
-
-    .pill {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: color-mix(in srgb, var(--primary) 85%, var(--text-main));
-      padding: 0.22rem 0.56rem;
-      border-radius: 999px;
-      background: color-mix(in srgb, var(--primary) 10%, var(--surface));
-      border: 1px solid color-mix(in srgb, var(--primary) 24%, var(--border));
-    }
-
-    .mini-stats {
-      padding: 1rem 1.2rem 1.25rem;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.75rem;
-    }
-
-    .mini-stat {
-      padding: 0.7rem;
-      border-radius: 0.8rem;
-      background: color-mix(in srgb, var(--surface-alt) 55%, var(--surface));
-      border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
-    }
-
-    .mini-stat strong {
-      display: block;
-      font-size: 1rem;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-    }
-
-    .mini-stat span {
-      font-size: 0.74rem;
-      color: var(--text-muted);
-    }
-
-    section {
-      padding-top: clamp(3.4rem, 8vw, 5.2rem);
-    }
-
-    .section-head {
-      max-width: 760px;
-      margin-bottom: 1.4rem;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      font-size: clamp(1.6rem, 4vw, 2.5rem);
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-    }
-
-    .section-head p {
-      margin: 0.8rem 0 0;
-      color: var(--text-muted);
-      max-width: 60ch;
-    }
-
-    .stats-grid {
-      display: grid;
-      gap: 0.9rem;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      margin-top: 1.1rem;
-    }
-
-    .card {
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      border: 1px solid color-mix(in srgb, var(--border) 76%, transparent);
-      box-shadow: var(--shadow-soft);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-hover);
-      border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
-    }
-
-    .stat-card {
-      padding: 1rem;
-    }
-
-    .stat-card h3 {
-      margin: 0;
-      font-size: 1.35rem;
-      letter-spacing: -0.02em;
-    }
-
-    .stat-card p {
-      margin: 0.35rem 0 0;
-      color: var(--text-muted);
-      font-size: 0.88rem;
-    }
-
-    .services-grid,
-    .projects-grid {
-      display: grid;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .service-card,
-    .project-card {
-      padding: 1.15rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-    }
-
-    .icon-wrap {
-      width: 2.8rem;
-      height: 2.8rem;
-      border-radius: 0.85rem;
-      background: color-mix(in srgb, var(--primary) 12%, var(--surface));
-      border: 1px solid color-mix(in srgb, var(--primary) 24%, var(--border));
-      display: inline-grid;
-      place-items: center;
-      color: var(--primary);
-    }
-
-    .icon-wrap svg {
-      width: 1.3rem;
-      height: 1.3rem;
-    }
-
-    .service-card h3,
-    .project-card h3 {
-      margin: 0;
-      font-size: 1.06rem;
-      letter-spacing: -0.01em;
-    }
-
-    .service-card p,
-    .project-card p {
-      margin: 0;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    .tag-list {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      margin-top: 0.2rem;
-    }
-
-    .tag {
-      font-size: 0.74rem;
-      padding: 0.22rem 0.5rem;
-      border-radius: 999px;
-      font-weight: 600;
-      color: color-mix(in srgb, var(--primary) 82%, var(--text-main));
-      background: color-mix(in srgb, var(--primary) 10%, var(--surface));
-      border: 1px solid color-mix(in srgb, var(--primary) 24%, var(--border));
-    }
-
-    .stack-wrap {
-      margin-top: 1rem;
-      padding: 1rem;
-    }
-
-    .stack-grid {
-      margin-top: 0.75rem;
-      display: grid;
-      gap: 0.8rem;
-      grid-template-columns: 1fr;
-    }
-
-    .stack-group {
-      padding: 0.88rem;
-      border-radius: 0.9rem;
-      border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
-      background: color-mix(in srgb, var(--surface-alt) 28%, var(--surface));
-    }
-
-    .stack-group-title {
-      margin: 0 0 0.7rem;
-      font-size: 0.92rem;
-      letter-spacing: -0.01em;
-    }
-
-    .stack-group-grid {
-      display: grid;
-      gap: 0.55rem;
-      grid-template-columns: 1fr;
-    }
-
-    .stack-pill {
-      padding: 0.5rem 0.66rem;
-      border-radius: 0.7rem;
-      border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
-      background: color-mix(in srgb, var(--surface-alt) 32%, var(--surface));
-      color: var(--text-main);
-      font-size: 0.82rem;
-      font-weight: 600;
-      text-align: left;
-    }
-
-    .cta {
-      margin-top: clamp(4rem, 8vw, 6rem);
-      padding: clamp(1.4rem, 4vw, 2.2rem);
-      border-radius: 1rem;
-      background: linear-gradient(145deg, #1e1b4b, #0f172a);
-      color: #e2e8f0;
-      box-shadow: 0 18px 45px -20px rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(129, 140, 248, 0.24);
-    }
-
-    .cta h2 {
-      margin: 0;
-      font-size: clamp(1.55rem, 3.2vw, 2.4rem);
-      line-height: 1.15;
-      max-width: 22ch;
-      letter-spacing: -0.02em;
-    }
-
-    .cta p {
-      margin: 0.75rem 0 0;
-      color: #cbd5e1;
-      max-width: 65ch;
-    }
-
-    .cta-actions {
-      margin-top: 1.3rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.7rem;
-    }
-
-    .btn-light {
-      min-height: 44px;
-      padding: 0.68rem 1rem;
-      border-radius: 0.68rem;
-      border: 1px solid rgba(148, 163, 184, 0.3);
-      background: rgba(248, 250, 252, 0.96);
-      color: #0f172a;
-      font-weight: 700;
-      font-size: 0.92rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .btn-light:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 18px -12px rgba(148, 163, 184, 0.8);
-    }
-
-    .btn-ghost {
-      min-height: 44px;
-      padding: 0.68rem 1rem;
-      border-radius: 0.68rem;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      color: #e2e8f0;
-      font-size: 0.92rem;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      transition: transform 0.2s ease, background-color 0.2s ease;
-    }
-
-    .btn-ghost:hover {
-      transform: translateY(-2px);
-      background: rgba(148, 163, 184, 0.12);
-    }
-
-    .socials {
-      margin-top: 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.7rem;
-    }
-
-    .social-link {
-      min-height: 42px;
-      min-width: 42px;
-      padding: 0.5rem 0.8rem;
-      border-radius: 0.65rem;
-      background: color-mix(in srgb, var(--surface) 70%, transparent);
-      border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
-      font-size: 0.86rem;
-      font-weight: 600;
-      color: var(--text-main);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.38rem;
-      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .social-link:hover {
-      transform: translateY(-2px);
-      border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
-      box-shadow: var(--shadow-soft);
-    }
-
-    .social-link svg {
-      width: 15px;
-      height: 15px;
-      color: var(--primary);
-    }
-
-    footer {
-      margin-top: 2rem;
-      padding-bottom: 0.5rem;
-      color: var(--text-muted);
-      font-size: 0.86rem;
-      text-align: center;
-    }
-
-    .focus-visible:focus-visible,
-    a:focus-visible,
-    button:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 52%, transparent);
-    }
-
-    @keyframes pulse {
-      0%,
-      100% {
-        box-shadow: 0 0 0 6px color-mix(in srgb, var(--success) 18%, transparent);
-      }
-      50% {
-        box-shadow: 0 0 0 10px color-mix(in srgb, var(--success) 8%, transparent);
-      }
-    }
-
-    @media (min-width: 760px) {
-      .nav-links {
-        display: flex;
-      }
-
-      .hero {
-        grid-template-columns: 1.05fr 0.95fr;
-      }
-
-      .stats-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-
-      .services-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .projects-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      .stack-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .stack-group-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 759px) {
-      .hero-card {
-        transform: none;
-      }
-
-      .hero-card:hover {
-        transform: translateY(-4px);
-      }
-
-      .mini-stats {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation: none !important;
-        transition-duration: 0.01ms !important;
-        transition-delay: 0ms !important;
-      }
-
-      html {
-        scroll-behavior: auto;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="page">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-
-    <header class="nav" aria-label="Main Navigation">
-      <div class="container nav-inner">
-        <a href="#top" class="brand" aria-label="Franco Fernández Lorio home">
-          <span class="brand-dot" aria-hidden="true">FF</span>
-          <span>Franco Fernández Lorio</span>
-        </a>
-
-        <nav class="nav-links" aria-label="Primary">
-          <a href="#about" data-i18n="nav.about">About</a>
-          <a href="#services" data-i18n="nav.services">Services</a>
-          <a href="#projects" data-i18n="nav.projects">Impact</a>
-          <a href="#contact" data-i18n="nav.contact">Contact</a>
-        </nav>
-
-        <div class="toggles">
-          <button id="langToggle" class="chip-btn focus-visible" type="button" aria-label="Switch language">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M5 8h14" />
-              <path d="M9 4h6" />
-              <path d="M8 12l4 8 4-8" />
-            </svg>
-            <span id="langLabel">ES</span>
-          </button>
-          <button id="themeToggle" class="chip-btn focus-visible" type="button" aria-label="Toggle theme">
-            <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M12 3a6.5 6.5 0 1 0 9 9A9 9 0 1 1 12 3z" />
-            </svg>
-            <span id="themeLabel">Dark</span>
-          </button>
-        </div>
-      </div>
-    </header>
-
-    <main id="top" class="container">
-      <section class="hero" aria-label="Hero">
-        <div>
-          <div class="eyebrow" data-i18n="hero.eyebrow">Available for high-impact projects</div>
-          <h1>
-            <span data-i18n="hero.titleStart">Building products with</span>
-            <span class="gradient-text" data-i18n="hero.titleGradient">senior engineering precision</span>
-          </h1>
-          <p data-i18n="hero.description">
-            Senior Full-Stack Developer and Technical Lead with 9+ years shipping scalable products with Laravel, Vue, TypeScript, and AWS serverless architecture.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="mailto:francofernandezlorio@gmail.com" data-i18n="hero.primaryCta">Start a project</a>
-            <a class="btn btn-secondary" href="#projects" data-i18n="hero.secondaryCta">See outcomes</a>
+<!doctype html>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#F7FAFC" />
+    <meta
+      name="description"
+      content="Franco Fernández Lorio, desarrollador full-stack senior y líder técnico. Herramientas internas, productos y desarrollo de software con IA. 15 años programando y 6 en la industria."
+    />
+    <title>Franco Fernández Lorio · Desarrollador Full-Stack Senior</title>
+    <link rel="canonical" href="https://francofl99.github.io/" />
+    <link rel="icon" type="image/jpeg" href="./public/profile.jpeg" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Franco Fernández Lorio · Desarrollador Full-Stack Senior"
+    />
+    <meta
+      property="og:description"
+      content="Franco Fernández Lorio, desarrollador full-stack senior y líder técnico. Herramientas internas, productos y desarrollo de software con IA. 15 años programando y 6 en la industria."
+    />
+    <meta property="og:url" content="https://francofl99.github.io/" />
+    <meta
+      property="og:image"
+      content="https://francofl99.github.io/public/profile.jpeg"
+    />
+    <meta property="og:locale" content="es_AR" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="stylesheet" href="./assets/styles.css?v=studio-v1" />
+    <script>
+      (() => {
+        try {
+          const s = localStorage;
+          const t =
+            s.getItem("portfolio-theme") || s.getItem("ff-portfolio-theme-1");
+          if (t === "dark" || t === "light")
+            document.documentElement.dataset.theme = t;
+        } catch {}
+      })();
+    </script>
+    <script type="module" src="./assets/app.js?v=studio-v1"></script>
+  </head>
+  <body>
+    <div
+      class="portfolio variant-1 theme-light"
+      id="top"
+      data-release="engineering-studio-v1"
+    >
+      <a class="skip-link" href="#projects" data-i18n="saltar-a-proyectos"
+        >Saltar a proyectos</a
+      >
+      <div class="main-column">
+        <header class="header">
+          <div class="header-profile">
+            <img
+              class="header-portrait"
+              src="./public/profile.jpeg"
+              width="64"
+              height="64"
+              alt="Retrato de Franco Fernández Lorio"
+              data-i18n-alt="retrato-de-franco-fernandez-lorio"
+            />
+            <div class="header-profile-copy">
+              <a
+                class="header-name"
+                href="#top"
+                aria-label="Franco Fernández Lorio — volver al inicio"
+                data-i18n-aria-label="franco-fernandez-lorio-volver-al-inicio"
+                >Franco Fernández Lorio</a
+              >
+              <p
+                class="header-role"
+                data-i18n="desarrollador-full-stack-senior-lider-tecnico"
+              >
+                Desarrollador Full-Stack Senior · Líder técnico
+              </p>
+              <dl
+                class="header-experience"
+                aria-label="Experiencia"
+                data-i18n-aria-label="experiencia"
+              >
+                <div>
+                  <dt data-i18n="anos-programando">años programando</dt>
+                  <dd>15</dd>
+                </div>
+                <div>
+                  <dt data-i18n="anos-en-la-industria">años en la industria</dt>
+                  <dd>6</dd>
+                </div>
+              </dl>
+            </div>
           </div>
-          <div class="availability">
-            <span class="status-dot" aria-hidden="true"></span>
-            <span data-i18n="hero.availability">Open to consulting and technical leadership engagements.</span>
+          <div class="header-right">
+            <nav
+              aria-label="Navegación principal"
+              data-i18n-aria-label="navegacion-principal"
+            >
+              <a href="#projects" data-i18n="proyectos">Proyectos</a
+              ><a href="#approach" data-i18n="enfoque">Enfoque</a
+              ><a href="#about" data-i18n="sobre-mi">Sobre mí</a
+              ><a href="#contact" data-i18n="contacto">Contacto</a>
+            </nav>
+            <div class="display-controls">
+              <div
+                class="language"
+                role="group"
+                aria-label="Idioma"
+                data-i18n-aria-label="idioma"
+              >
+                <button
+                  aria-pressed="true"
+                  data-language="es"
+                  type="button"
+                  disabled=""
+                >
+                  ES</button
+                ><button
+                  aria-pressed="false"
+                  data-language="en"
+                  type="button"
+                  disabled=""
+                >
+                  EN
+                </button>
+              </div>
+              <button
+                type="button"
+                class="theme-toggle"
+                aria-label="Cambiar a tema oscuro"
+                title="Cambiar a tema oscuro"
+                aria-pressed="false"
+                id="theme-toggle"
+                disabled=""
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path
+                    d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"
+                  ></path></svg
+                ><span>Claro</span>
+              </button>
+            </div>
           </div>
-        </div>
-
-        <div class="hero-card-wrap">
-          <article class="hero-card" aria-label="Profile overview">
-            <div class="hero-grid">
-              <img src="./public/profile.jpeg" class="avatar" id="profileImage" alt="Portrait of Franco Fernández Lorio" />
-              <div>
-                <h2 class="hero-name">Franco Fernández Lorio</h2>
-                <p class="hero-role" data-i18n="hero.cardRole">Senior Full-Stack Developer · Technical Lead</p>
-                <div class="pills" id="heroPills"></div>
+        </header>
+        <main>
+          <section class="hero section">
+            <div class="hero-copy">
+              <div
+                class="eyebrow"
+                data-i18n="ingenieria-de-producto-herramientas-propias"
+              >
+                INGENIERÍA DE PRODUCTO · HERRAMIENTAS PROPIAS
+              </div>
+              <h1>
+                <span class="copy" data-i18n="el-software-deberia"
+                  >El software debería</span
+                ><br /><span data-i18n="adaptarse-a-vos">adaptarse a vos.</span>
+              </h1>
+              <p
+                class="hero-description"
+                data-i18n="diseno-y-construyo-productos-herramientas-internas-y-automatiz"
+              >
+                Diseño y construyo productos, herramientas internas y
+                automatizaciones para resolver problemas concretos. Con criterio
+                técnico y foco en el costo total.
+              </p>
+              <div class="hero-actions">
+                <a class="button primary" href="#contact"
+                  ><span class="copy" data-i18n="conversemos">Conversemos </span
+                  ><svg
+                    width="19"
+                    height="19"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M6 18 18 6M6 6h12v12"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path></svg></a
+                ><a class="text-link" href="#projects"
+                  ><span class="copy" data-i18n="explorar-proyectos"
+                    >Explorar proyectos </span
+                  ><svg
+                    width="19"
+                    height="19"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M4 12h15m-6-6 6 6-6 6"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path></svg
+                ></a>
               </div>
             </div>
-            <div class="mini-stats" id="miniStats"></div>
-          </article>
+            <div class="studio-art">
+              <div class="art-label" data-i18n="de-la-friccion-al-flujo">
+                DE LA FRICCIÓN AL FLUJO
+              </div>
+              <div class="composition">
+                <div class="tile tile-one">
+                  <span>⌘</span><strong>build</strong
+                  ><small data-i18n="herramientas-propias"
+                    >Herramientas propias</small
+                  >
+                </div>
+                <div class="tile tile-two">
+                  <span>↗</span><strong>connect</strong
+                  ><small data-i18n="flujos-conectados"
+                    >Flujos conectados</small
+                  >
+                </div>
+                <div class="tile tile-three">
+                  <span>✳</span><strong>simplify</strong
+                  ><small data-i18n="menos-trabajo-repetitivo"
+                    >Menos trabajo repetitivo</small
+                  >
+                </div>
+              </div>
+              <div class="art-footer">
+                <span data-i18n="criterio-antes-que-complejidad"
+                  >Criterio antes que complejidad.</span
+                >
+              </div>
+            </div>
+            <figure class="studio-note">
+              <blockquote
+                data-i18n="si-una-tarea-se-repite-hay-una-herramienta-esperando-ser-const"
+              >
+                Si una tarea se repite, hay una herramienta esperando ser
+                construida.
+              </blockquote>
+              <figcaption>— Franco</figcaption>
+            </figure>
+          </section>
+          <section class="projects section" id="projects">
+            <div class="section-heading">
+              <div>
+                <div class="eyebrow" data-i18n="de-necesidad-a-herramienta">
+                  DE NECESIDAD A HERRAMIENTA
+                </div>
+                <h2>
+                  <span class="copy" data-i18n="lo-que-estoy-construyendo"
+                    >Lo que estoy construyendo</span
+                  ><span class="period">.</span>
+                </h2>
+              </div>
+              <p
+                data-i18n="proyectos-propios-que-nacieron-de-problemas-reales-de-mi-dia-a"
+              >
+                Proyectos propios que nacieron de problemas reales de mi día a
+                día.
+              </p>
+            </div>
+            <div
+              class="filters"
+              role="group"
+              aria-label="Filtrar proyectos"
+              data-i18n-aria-label="filtrar-proyectos"
+            >
+              <button
+                aria-pressed="true"
+                data-filter="all"
+                type="button"
+                disabled=""
+              >
+                <span class="copy" data-i18n="todos">Todos</span
+                ><span>8</span></button
+              ><button
+                aria-pressed="false"
+                data-filter="dev"
+                type="button"
+                disabled=""
+              >
+                Developer tools</button
+              ><button
+                aria-pressed="false"
+                data-i18n="flujos-con-ia"
+                data-filter="ai"
+                type="button"
+                disabled=""
+              >
+                Flujos con IA</button
+              ><button
+                aria-pressed="false"
+                data-filter="mac"
+                type="button"
+                disabled=""
+              >
+                macOS
+              </button>
+            </div>
+            <noscript
+              >&lt;p class="noscript-note"&gt;Podés leer el portfolio y usar los
+              enlaces de contacto sin JavaScript. Activá JavaScript para cambiar
+              idioma o tema, filtrar proyectos y abrir sus
+              fichas.&lt;/p&gt;</noscript
+            >
+            <p
+              id="project-status"
+              class="sr-only"
+              role="status"
+              aria-live="polite"
+            ></p>
+            <div class="project-grid">
+              <article
+                class="project-card project-dev"
+                data-category="dev"
+                data-project="benv"
+              >
+                <div class="project-top">
+                  <span class="project-symbol">⌘</span
+                  ><span>Developer tools</span
+                  ><svg
+                    width="19"
+                    height="19"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M6 18 18 6M6 6h12v12"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </div>
+                <div class="project-content">
+                  <h3>
+                    <button
+                      type="button"
+                      class="project-open"
+                      data-project-id="benv"
+                      aria-label="Ver caso: benv"
+                      data-i18n-aria-label="ver-caso-benv"
+                      aria-describedby="project-summary-benv"
+                      disabled=""
+                    >
+                      benv
+                    </button>
+                  </h3>
+                  <p
+                    data-i18n="entornos-por-branch-sin-pelear-por-el-mismo-workspace"
+                    id="project-summary-benv"
+                  >
+                    Entornos por branch, sin pelear por el mismo workspace.
+                  </p>
+                </div>
+                <div class="project-bottom">
+                  <span>Node.js · CLI · Docker</span
+                  ><span class="case-link" aria-hidden="true"
+                    ><span class="copy" data-i18n="ver-caso">Ver caso </span
+                    ><svg
+                      width="19"
+                      height="19"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M4 12h15m-6-6 6 6-6 6"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path></svg
+                  ></span>
+                </div>
+              </article>
+              <article
+                class="project-card project-ai"
+                data-category="ai"
+                data-project="agent-board"
+              >
+                <div class="project-top">
+                  <span class="project-symbol">✳</span
+                  ><span data-i18n="flujos-con-ia">Flujos con IA</span
+                  ><svg
+                    width="19"
+                    height="19"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M6 18 18 6M6 6h12v12"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </div>
+                <div class="project-content">
+                  <h3>
+                    <button
+                      type="button"
+                      class="project-open"
+                      data-project-id="agent-board"
+                      aria-label="Ver caso: agent-board"
+                      data-i18n-aria-label="ver-caso-agent-board"
+                      aria-describedby="project-summary-agent-board"
+                      disabled=""
+                    >
+                      agent-board
+                    </button>
+                  </h3>
+                  <p
+                    data-i18n="una-vista-local-de-las-sesiones-de-tus-agentes-de-codigo"
+                    id="project-summary-agent-board"
+                  >
+                    Una vista local de las sesiones de tus agentes de código.
+                  </p>
+                </div>
+                <div class="project-bottom">
+                  <span>Node.js · React · Tauri</span
+                  ><span class="case-link" aria-hidden="true"
+                    ><span class="copy" data-i18n="ver-caso">Ver caso </span
+                    ><svg
+                      width="19"
+                      height="19"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M4 12h15m-6-6 6 6-6 6"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path></svg
+                  ></span>
+                </div>
+              </article>
+              <article
+                class="project-card project-ai"
+                data-category="ai"
+                data-project="llm-context-export"
+              >
+                <div class="project-top">
+                  <span class="project-symbol">✳</span
+                  ><span data-i18n="flujos-con-ia">Flujos con IA</span
+                  ><svg
+                    width="19"
+                    height="19"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M6 18 18 6M6 6h12v12"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </div>
+                <div class="project-content">
+                  <h3>
+                    <button
+                      type="button"
+                      class="project-open"
+                      data-project-id="llm-context-export"
+                      aria-label="Ver caso: llm-context-export"
+                      data-i18n-aria-label="ver-caso-llm-context-export"
+                      aria-describedby="project-summary-llm-context-export"
+                      disabled=""
+                    >
+                      llm-context-export
+                    </button>
+                  </h3>
+                  <p
+                    data-i18n="de-una-conversacion-de-claude-code-a-contexto-portable"
+                    id="project-summary-llm-context-export"
+                  >
+                    De una conversación de Claude Code a contexto portable.
+                  </p>
+                </div>
+                <div class="project-bottom">
+                  <span>Rust · CLI · Markdown</span
+                  ><span class="case-link" aria-hidden="true"
+                    ><span class="copy" data-i18n="ver-caso">Ver caso </span
+                    ><svg
+                      width="19"
+                      height="19"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M4 12h15m-6-6 6 6-6 6"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path></svg
+                  ></span>
+                </div>
+              </article>
+              <article
+                class="project-card project-dev"
+                data-category="dev"
+                data-project="git-manager"
+              >
+                <div class="project-top">
+                  <span class="project-symbol">⌘</span
+                  ><span>Developer tools</span
+                  ><svg
+                    width="19"
+                    height="19"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M6 18 18 6M6 6h12v12"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </div>
+                <div class="project-content">
+                  <h3>
+                    <button
+                      type="button"
+                      class="project-open"
+                      data-project-id="git-manager"
+                      aria-label="Ver caso: git-manager"
+                      data-i18n-aria-label="ver-caso-git-manager"
+                      aria-describedby="project-summary-git-manager"
+                      disabled=""
+                    >
+                      git-manager
+                    </button>
+                  </h3>
+                  <p
+                    data-i18n="operaciones-de-git-coordinadas-entre-varios-repositorios"
+                    id="project-summary-git-manager"
+                  >
+                    Operaciones de Git coordinadas entre varios repositorios.
+                  </p>
+                </div>
+                <div class="project-bottom">
+                  <span>Python · Git · CLI</span
+                  ><span class="case-link" aria-hidden="true"
+                    ><span class="copy" data-i18n="ver-caso">Ver caso </span
+                    ><svg
+                      width="19"
+                      height="19"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M4 12h15m-6-6 6 6-6 6"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path></svg
+                  ></span>
+                </div>
+              </article>
+              <article
+                class="project-card project-mac"
+                data-category="mac"
+                data-project="mac-optimizer"
+              >
+                <div class="project-top">
+                  <span class="project-symbol">◈</span><span>macOS</span
+                  ><svg
+                    width="19"
+                    height="19"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M6 18 18 6M6 6h12v12"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </div>
+                <div class="project-content">
+                  <h3>
+                    <button
+                      type="button"
+                      class="project-open"
+                      data-project-id="mac-optimizer"
+                      aria-label="Ver caso: mac-optimizer"
+                      data-i18n-aria-label="ver-caso-mac-optimizer"
+                      aria-describedby="project-summary-mac-optimizer"
+                      disabled=""
+                    >
+                      mac-optimizer
+                    </button>
+                  </h3>
+                  <p
+                    data-i18n="diagnostico-del-mac-con-acciones-bajo-control-del-usuario"
+                    id="project-summary-mac-optimizer"
+                  >
+                    Diagnóstico del Mac con acciones bajo control del usuario.
+                  </p>
+                </div>
+                <div class="project-bottom">
+                  <span>Python · Shell · Claude Code</span
+                  ><span class="case-link" aria-hidden="true"
+                    ><span class="copy" data-i18n="ver-caso">Ver caso </span
+                    ><svg
+                      width="19"
+                      height="19"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M4 12h15m-6-6 6 6-6 6"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path></svg
+                  ></span>
+                </div>
+              </article>
+              <article
+                class="project-card project-mac"
+                data-category="mac"
+                data-project="personal-console"
+              >
+                <div class="project-top">
+                  <span class="project-symbol">◈</span><span>macOS</span
+                  ><svg
+                    width="19"
+                    height="19"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M6 18 18 6M6 6h12v12"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </div>
+                <div class="project-content">
+                  <h3>
+                    <button
+                      type="button"
+                      class="project-open"
+                      data-project-id="personal-console"
+                      aria-label="Ver caso: personal-console"
+                      data-i18n-aria-label="ver-caso-personal-console"
+                      aria-describedby="project-summary-personal-console"
+                      disabled=""
+                    >
+                      personal-console
+                    </button>
+                  </h3>
+                  <p
+                    data-i18n="sistema-y-agentes-reunidos-en-una-sola-pantalla"
+                    id="project-summary-personal-console"
+                  >
+                    Sistema y agentes, reunidos en una sola pantalla.
+                  </p>
+                </div>
+                <div class="project-bottom">
+                  <span data-i18n="node-js-apis-locales"
+                    >Node.js · APIs locales</span
+                  ><span class="case-link" aria-hidden="true"
+                    ><span class="copy" data-i18n="ver-caso">Ver caso </span
+                    ><svg
+                      width="19"
+                      height="19"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M4 12h15m-6-6 6 6-6 6"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path></svg
+                  ></span>
+                </div>
+              </article>
+              <article
+                class="project-card project-mac"
+                data-category="mac"
+                data-project="mac-alarm"
+              >
+                <div class="project-top">
+                  <span class="project-symbol">◈</span><span>macOS</span
+                  ><svg
+                    width="19"
+                    height="19"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M6 18 18 6M6 6h12v12"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </div>
+                <div class="project-content">
+                  <h3>
+                    <button
+                      type="button"
+                      class="project-open"
+                      data-project-id="mac-alarm"
+                      aria-label="Ver caso: mac-alarm"
+                      data-i18n-aria-label="ver-caso-mac-alarm"
+                      aria-describedby="project-summary-mac-alarm"
+                      disabled=""
+                    >
+                      mac-alarm
+                    </button>
+                  </h3>
+                  <p
+                    data-i18n="una-alarma-de-teclado-para-el-escritorio-del-mac"
+                    id="project-summary-mac-alarm"
+                  >
+                    Una alarma de teclado para el escritorio del Mac.
+                  </p>
+                </div>
+                <div class="project-bottom">
+                  <span>Swift · macOS</span
+                  ><span class="case-link" aria-hidden="true"
+                    ><span class="copy" data-i18n="ver-caso">Ver caso </span
+                    ><svg
+                      width="19"
+                      height="19"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M4 12h15m-6-6 6 6-6 6"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path></svg
+                  ></span>
+                </div>
+              </article>
+              <article
+                class="project-card project-mac"
+                data-category="mac"
+                data-project="blur-selection"
+              >
+                <div class="project-top">
+                  <span class="project-symbol">◈</span><span>macOS</span
+                  ><svg
+                    width="19"
+                    height="19"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M6 18 18 6M6 6h12v12"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </div>
+                <div class="project-content">
+                  <h3>
+                    <button
+                      type="button"
+                      class="project-open"
+                      data-project-id="blur-selection"
+                      aria-label="Ver caso: blur-selection"
+                      data-i18n-aria-label="ver-caso-blur-selection"
+                      aria-describedby="project-summary-blur-selection"
+                      disabled=""
+                    >
+                      blur-selection
+                    </button>
+                  </h3>
+                  <p
+                    data-i18n="oculta-regiones-sensibles-al-compartir-la-pantalla"
+                    id="project-summary-blur-selection"
+                  >
+                    Ocultá regiones sensibles al compartir la pantalla.
+                  </p>
+                </div>
+                <div class="project-bottom">
+                  <span>Swift · ScreenCaptureKit</span
+                  ><span class="case-link" aria-hidden="true"
+                    ><span class="copy" data-i18n="ver-caso">Ver caso </span
+                    ><svg
+                      width="19"
+                      height="19"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M4 12h15m-6-6 6 6-6 6"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path></svg
+                  ></span>
+                </div>
+              </article>
+            </div>
+          </section>
+          <section class="approach section" id="approach">
+            <div class="approach-intro" id="services">
+              <div class="eyebrow" data-i18n="una-propuesta-propia">
+                UNA PROPUESTA PROPIA
+              </div>
+              <h2>In-house engineering<span class="period">.</span></h2>
+              <p
+                data-i18n="herramientas-hechas-para-tu-empresa-no-tu-empresa-adaptada-a-u"
+              >
+                Herramientas hechas para tu empresa. No tu empresa adaptada a
+                una herramienta.
+              </p>
+              <small
+                data-i18n="asi-llamo-a-mi-enfoque-no-es-un-cargo-estandar-de-la-industria"
+                >Así llamo a mi enfoque; no es un cargo estándar de la
+                industria.</small
+              >
+            </div>
+            <div class="approach-body">
+              <p
+                data-i18n="evaluar-que-conviene-construir-integrar-o-seguir-comprando-usa"
+              >
+                Evaluar qué conviene construir, integrar o seguir comprando.
+                Usar IA cuando aporta valor y desarrollar software propio donde
+                el costo total, el control y la adaptación lo justifiquen.
+              </p>
+              <div class="principles">
+                <span data-i18n="01-entender-el-proceso"
+                  >01 — Entender el proceso</span
+                ><span data-i18n="02-comparar-el-costo-total"
+                  >02 — Comparar el costo total</span
+                ><span data-i18n="03-construir-y-mantener"
+                  >03 — Construir y mantener</span
+                >
+              </div>
+              <small
+                data-i18n="no-todo-saas-necesita-un-reemplazo-mantenimiento-infraestructu"
+                >No todo SaaS necesita un reemplazo. Mantenimiento,
+                infraestructura y seguridad también cuentan.</small
+              >
+            </div>
+          </section>
+          <section
+            class="about section"
+            id="about"
+            aria-labelledby="about-title"
+          >
+            <div class="about-overview">
+              <div class="eyebrow" data-i18n="sobre-mi-mi-forma-de-trabajar">
+                SOBRE MÍ · MI FORMA DE TRABAJAR
+              </div>
+              <h2 id="about-title">
+                <span class="copy" data-i18n="construir-es-una-parte"
+                  >Construir es una parte.</span
+                ><br /><span data-i18n="hacer-que-funcione-el-resto"
+                  >Hacer que funcione, el resto.</span
+                >
+              </h2>
+              <div>
+                <p
+                  data-i18n="mi-trabajo-combina-producto-arquitectura-integraciones-y-entre"
+                >
+                  Mi trabajo combina producto, arquitectura, integraciones y
+                  entrega: desde entender el problema hasta construir y mantener
+                  la solución. Me interesa que las herramientas encajen con la
+                  forma de trabajar del equipo, no al revés.
+                </p>
+                <h3 class="stack-label" data-i18n="stack-tecnico">
+                  Stack técnico
+                </h3>
+                <div class="stack">
+                  <span>Laravel</span><span>Vue</span><span>TypeScript</span
+                  ><span>Node.js</span><span>AWS</span><span>Docker</span
+                  ><span>CI/CD</span><span>TDD</span>
+                </div>
+              </div>
+            </div>
+            <div class="ai-section about-ai" id="ai" aria-labelledby="ai-title">
+              <div class="section-heading">
+                <div>
+                  <div class="eyebrow" data-i18n="ia-en-mi-forma-de-trabajar">
+                    IA EN MI FORMA DE TRABAJAR
+                  </div>
+                  <h3 id="ai-title">
+                    <span class="copy" data-i18n="software-con-ia"
+                      >Software con IA.</span
+                    ><br /><span data-i18n="criterio-de-ingenieria"
+                      >Criterio de ingeniería.</span
+                    >
+                  </h3>
+                </div>
+                <p
+                  data-i18n="tengo-experiencia-desarrollando-software-con-herramientas-de-i"
+                >
+                  Tengo experiencia desarrollando software con herramientas de
+                  inteligencia artificial. Las integro al trabajo técnico sin
+                  delegar la responsabilidad sobre la solución.
+                </p>
+              </div>
+              <div class="ai-grid">
+                <article>
+                  <span class="eyebrow" data-i18n="desarrollo">DESARROLLO</span>
+                  <h4 data-i18n="desarrollo-asistido-por-ia">
+                    Desarrollo asistido por IA
+                  </h4>
+                  <p
+                    data-i18n="herramientas-como-claude-code-y-codex-para-trabajar-sobre-codi"
+                  >
+                    Herramientas como Claude Code y Codex para trabajar sobre
+                    código, explorar soluciones e implementar funcionalidades.
+                  </p>
+                </article>
+                <article>
+                  <span class="eyebrow" data-i18n="herramientas"
+                    >HERRAMIENTAS</span
+                  >
+                  <h4 data-i18n="flujos-de-trabajo-con-agentes">
+                    Flujos de trabajo con agentes
+                  </h4>
+                  <p
+                    data-i18n="herramientas-propias-para-organizar-sesiones-preparar-contexto"
+                  >
+                    Herramientas propias para organizar sesiones, preparar
+                    contexto y trabajar en paralelo: agent-board,
+                    llm-context-export y benv.
+                  </p>
+                </article>
+                <article>
+                  <span class="eyebrow" data-i18n="criterio">CRITERIO</span>
+                  <h4 data-i18n="revision-y-validacion">
+                    Revisión y validación
+                  </h4>
+                  <p
+                    data-i18n="la-ia-es-parte-del-proceso-no-un-reemplazo-del-criterio-tecnic"
+                  >
+                    La IA es parte del proceso, no un reemplazo del criterio
+                    técnico. El código necesita revisión, pruebas y una solución
+                    mantenible.
+                  </p>
+                </article>
+              </div>
+              <div class="ai-tools">
+                <span data-i18n="herramientas-de-desarrollo-con-ia"
+                  >Herramientas de desarrollo con IA</span
+                >
+                <div class="stack">
+                  <span>Claude Code</span><span>Codex</span>
+                </div>
+                <a class="text-link" href="#projects"
+                  ><span class="copy" data-i18n="ver-herramientas-propias"
+                    >Ver herramientas propias </span
+                  ><svg
+                    width="19"
+                    height="19"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M4 12h15m-6-6 6 6-6 6"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path></svg
+                ></a>
+              </div>
+            </div>
+          </section>
+          <section
+            class="contact section contact-final"
+            id="contact"
+            aria-labelledby="contact-title"
+          >
+            <div class="contact-copy">
+              <div class="eyebrow" data-i18n="contacto-2">CONTACTO</div>
+              <h2 id="contact-title">
+                <span class="copy" data-i18n="conversemos-sobre"
+                  >Conversemos sobre</span
+                ><br /><span data-i18n="lo-que-queres-construir"
+                  >lo que querés construir.</span
+                >
+              </h2>
+              <p
+                data-i18n="un-producto-una-herramienta-interna-o-un-proceso-que-podria-fu"
+              >
+                Un producto, una herramienta interna o un proceso que podría
+                funcionar mejor. Contame qué necesita tu equipo y veamos cómo
+                puedo ayudar.
+              </p>
+            </div>
+            <div class="contact-links">
+              <a
+                class="contact-link contact-email"
+                href="mailto:francofernandezlorio@gmail.com"
+                ><span class="contact-icon"
+                  ><svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                    <path d="m4 7 8 6 8-6"></path></svg></span
+                ><span class="contact-link-copy"
+                  ><strong data-i18n="escribime-por-email"
+                    >Escribime por email</strong
+                  ><span>francofernandezlorio@gmail.com</span></span
+                ><svg
+                  width="19"
+                  height="19"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M6 18 18 6M6 6h12v12"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path></svg></a
+              ><a
+                class="contact-link"
+                href="https://www.linkedin.com/in/franco-fernandez-lorio-38b2b122a/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn — abrir perfil en una nueva pestaña"
+                data-i18n-aria-label="linkedin-abrir-perfil-en-una-nueva-pestana"
+                ><span class="contact-icon"
+                  ><svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M20.45 2H3.55A1.53 1.53 0 0 0 2 3.51v16.98A1.53 1.53 0 0 0 3.55 22h16.9A1.53 1.53 0 0 0 22 20.49V3.51A1.53 1.53 0 0 0 20.45 2ZM8.07 18.74H5.1V9.2h2.97ZM6.59 7.9a1.72 1.72 0 1 1 0-3.44 1.72 1.72 0 0 1 0 3.44Zm12.15 10.84h-2.96V14.1c0-1.1-.02-2.52-1.54-2.52-1.54 0-1.78 1.2-1.78 2.44v4.72H9.5V9.2h2.84v1.3h.04a3.12 3.12 0 0 1 2.81-1.55c3 0 3.55 1.97 3.55 4.53Z"
+                    ></path></svg></span
+                ><span class="contact-link-copy"
+                  ><strong>LinkedIn</strong
+                  ><span data-i18n="mi-perfil-profesional"
+                    >Mi perfil profesional</span
+                  ></span
+                ><svg
+                  width="19"
+                  height="19"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M6 18 18 6M6 6h12v12"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path></svg></a
+              ><a
+                class="contact-link"
+                href="https://github.com/francofl99"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub — abrir perfil en una nueva pestaña"
+                data-i18n-aria-label="github-abrir-perfil-en-una-nueva-pestana"
+                ><span class="contact-icon"
+                  ><svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.73 1.16 1.73 1.16 1 1.72 2.64 1.22 3.28.94.1-.73.39-1.22.71-1.5-2.5-.28-5.13-1.25-5.13-5.57 0-1.23.44-2.23 1.16-3.01-.12-.29-.5-1.43.11-2.98 0 0 .95-.3 3.1 1.15a10.8 10.8 0 0 1 5.63 0c2.15-1.46 3.1-1.15 3.1-1.15.61 1.55.23 2.69.11 2.98.72.78 1.16 1.78 1.16 3.01 0 4.33-2.64 5.28-5.15 5.56.4.35.76 1.03.76 2.08v3.09c0 .3.2.65.78.54A11.25 11.25 0 0 0 12 .75Z"
+                    ></path></svg></span
+                ><span class="contact-link-copy"
+                  ><strong>GitHub</strong><span>@francofl99</span></span
+                ><svg
+                  width="19"
+                  height="19"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M6 18 18 6M6 6h12v12"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path></svg
+              ></a>
+            </div>
+          </section>
+        </main>
+        <footer>
+          <span
+            >© <span id="copyright-year">2026</span> Franco Fernández
+            Lorio</span
+          ><span data-i18n="hecho-con-intencion">Hecho con intención.</span
+          ><a href="#top"
+            ><span class="copy" data-i18n="volver-arriba">Volver arriba </span
+            ><svg
+              width="19"
+              height="19"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M6 18 18 6M6 6h12v12"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path></svg
+          ></a>
+        </footer>
+      </div>
+      <dialog
+        class="case-dialog"
+        aria-labelledby="project-case-title"
+        aria-describedby="project-case-summary"
+        id="project-dialog"
+      >
+        <div class="dialog-top">
+          <span class="eyebrow" id="case-category"></span
+          ><button
+            type="button"
+            class="case-close"
+            autofocus=""
+            aria-label="Cerrar caso"
+            disabled=""
+          >
+            ×
+          </button>
         </div>
-      </section>
-
-      <section id="about" aria-labelledby="aboutTitle">
-        <div class="section-head">
-          <h2 id="aboutTitle" data-i18n="about.title">Trust-driven execution with startup speed</h2>
-          <p data-i18n="about.description">
-            I lead product engineering end-to-end, balancing architecture quality, delivery speed, and team health.
-          </p>
+        <div class="case-body" tabindex="0" aria-label="Detalles del proyecto">
+          <h2 id="project-case-title"></h2>
+          <p class="dialog-intro" id="project-case-summary"></p>
+          <h3 id="case-problem-title"></h3>
+          <p id="case-problem"></p>
+          <h3 id="case-solution-title"></h3>
+          <p id="case-solution"></p>
+          <div class="dialog-tech" id="case-tech"></div>
         </div>
-        <div class="stats-grid" id="statsGrid"></div>
-      </section>
-
-      <section id="services" aria-labelledby="servicesTitle">
-        <div class="section-head">
-          <h2 id="servicesTitle" data-i18n="services.title">How I can help your team</h2>
-          <p data-i18n="services.description">
-            Flexible collaboration model across delivery, architecture, and technical leadership.
-          </p>
-        </div>
-        <div class="services-grid" id="servicesGrid"></div>
-      </section>
-
-      <section id="projects" aria-labelledby="projectsTitle">
-        <div class="section-head">
-          <h2 id="projectsTitle" data-i18n="projects.title">Selected outcomes</h2>
-          <p data-i18n="projects.description">
-            Impact-focused work across product modernization, platform architecture, and operational excellence.
-          </p>
-        </div>
-        <div class="projects-grid" id="projectsGrid"></div>
-      </section>
-
-      <section aria-labelledby="stackTitle">
-        <div class="section-head">
-          <h2 id="stackTitle" data-i18n="stack.title">Core stack and delivery toolkit</h2>
-          <p data-i18n="stack.description">Technologies I use daily to ship reliable and maintainable software.</p>
-        </div>
-        <article class="card stack-wrap">
-          <div class="stack-grid" id="stackGrid"></div>
-        </article>
-      </section>
-
-      <section id="contact" class="cta" aria-labelledby="contactTitle">
-        <h2 id="contactTitle" data-i18n="contact.title">Need a senior engineer who can lead and deliver?</h2>
-        <p data-i18n="contact.description">
-          Let's discuss your roadmap, bottlenecks, or migration plan and define a practical path to execution.
-        </p>
-        <div class="cta-actions">
-          <a class="btn-light" href="mailto:francofernandezlorio@gmail.com" data-i18n="contact.primary">Email me</a>
-          <button class="btn-ghost" id="copyEmailBtn" type="button" data-i18n="contact.secondary">Copy email</button>
-        </div>
-
-        <div class="socials" aria-label="Social links">
-          <a class="social-link" href="https://www.linkedin.com/in/franco-fernandez-lorio-38b2b122a/" target="_blank" rel="noreferrer noopener" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-            <span>LinkedIn</span>
-          </a>
-          <a class="social-link" href="https://github.com/francofl99" target="_blank" rel="noreferrer noopener" aria-label="GitHub">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3"></path><path d="M15 22v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.77 5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.38 13.38 0 0 0-7 0C5.27.63 4.09.98 4.09.98A5.07 5.07 0 0 0 4 4.75a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 6.96A3.37 3.37 0 0 0 8 18.13V22"></path></svg>
-            <span>GitHub</span>
-          </a>
-          <a class="social-link" href="https://x.com/franco_lorio" target="_blank" rel="noreferrer noopener" aria-label="X">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4l11.4 16H20L8.6 4z"></path><path d="M4 20l6.8-7.2"></path><path d="M13.2 11.6L20 4"></path></svg>
-            <span>X</span>
-          </a>
-          <a class="social-link" href="https://dev.to/frandev" target="_blank" rel="noreferrer noopener" aria-label="Dev.to">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M7 8v8"></path><path d="M12 8l3 4-3 4"></path><path d="M16.5 8h1.8"></path></svg>
-            <span>Dev.to</span>
-          </a>
-        </div>
-      </section>
-
-      <footer>
-        <span id="footerText">© <span id="year"></span> Franco Fernández Lorio · Built with performance and clarity in mind.</span>
-      </footer>
-    </main>
-  </div>
-
-  <script>
-    const EMAIL = "francofernandezlorio@gmail.com";
-
-    const dictionary = {
-      en: {
-        metaTitle: "Franco Fernández Lorio · Senior Full-Stack Developer",
-        nav: {
-          about: "About",
-          services: "Services",
-          projects: "Impact",
-          contact: "Contact"
-        },
-        hero: {
-          eyebrow: "Available for high-impact projects",
-          titleStart: "Building products with",
-          titleGradient: "senior engineering precision",
-          description: "Senior Full-Stack Developer and Technical Lead with 9+ years shipping scalable products with Laravel, Vue, TypeScript, and AWS serverless architecture.",
-          primaryCta: "Start a project",
-          secondaryCta: "See outcomes",
-          availability: "Open to consulting and technical leadership engagements.",
-          cardRole: "Senior Full-Stack Developer · Technical Lead",
-          pills: ["Laravel", "Vue 2→3", "AWS", "CI/CD"],
-          miniStats: [
-            { value: "9+", label: "Years shipping products" },
-            { value: "4", label: "Years leading teams" },
-            { value: "20+", label: "Complex integrations" }
-          ]
-        },
-        about: {
-          title: "Trust-driven execution with startup speed",
-          description: "I lead product engineering end-to-end, balancing architecture quality, delivery speed, and team health.",
-          stats: [
-            { value: "10M+", label: "Events processed in production" },
-            { value: "-45%", label: "Lead-time reduction in delivery flows" },
-            { value: "99.9%", label: "Availability targets in critical services" },
-            { value: "5x", label: "Faster onboarding with standards & playbooks" }
-          ]
-        },
-        services: {
-          title: "How I can help your team",
-          description: "Flexible collaboration model across delivery, architecture, and technical leadership.",
-          items: [
-            {
-              icon: "code",
-              title: "Full-Stack Product Delivery",
-              description: "End-to-end development of features and products with Laravel, Vue, TypeScript, and robust backend practices."
-            },
-            {
-              icon: "layers",
-              title: "Architecture and Modernization",
-              description: "Technical diagnostics, scaling plans, refactoring strategy, and migrations from legacy code to maintainable systems."
-            },
-            {
-              icon: "link",
-              title: "Complex Integrations",
-              description: "WhatsApp API, Meta, Slack bots, GraphQL, and event-driven workflows with high reliability."
-            },
-            {
-              icon: "settings",
-              title: "AWS, CI/CD and DevOps",
-              description: "Serverless infrastructure, deployment pipelines, automated quality gates, and observability workflows."
-            }
-          ]
-        },
-        projects: {
-          title: "Selected outcomes",
-          description: "Outcome-focused work in AI messaging, omnichannel communication, and enterprise integrations.",
-          items: [
-            {
-              title: "AI chatbot integration in messaging flows",
-              description: "Implemented chatbot capabilities with artificial intelligence inside operational messaging flows to improve automation and response quality.",
-              tags: ["AI", "Messaging", "Automation"]
-            },
-            {
-              title: "WhatsApp API-driven functionality",
-              description: "Delivered product features powered by WhatsApp API integrations, enabling reliable communication workflows across customer touchpoints.",
-              tags: ["WhatsApp API", "Integrations", "Product"]
-            },
-            {
-              title: "Enterprise API integrations (Salesforce / HubSpot)",
-              description: "Built and maintained integrations with large platforms such as Salesforce and HubSpot to synchronize data and business processes.",
-              tags: ["Salesforce", "HubSpot", "APIs"]
-            }
-          ]
-        },
-        stack: {
-          title: "Core stack and delivery toolkit",
-          description: "Technologies and engineering practices I use to deliver production-ready software end-to-end.",
-          groups: [
-            {
-              title: "Backend",
-              items: [
-                "PHP / Laravel",
-                "Node.js",
-                "TypeScript",
-                "REST APIs",
-                "Python",
-                "Relational and non-relational databases (MySQL, MongoDB, PostgreSQL, SQLite)"
-              ]
-            },
-            {
-              title: "Frontend",
-              items: [
-                "Vue.js (Vue 2 & Vue 3)",
-                "React",
-                "React Native",
-                "Angular",
-                "JavaScript",
-                "TypeScript",
-                "Tailwind CSS",
-                "CSS",
-                "HTML",
-                "jQuery"
-              ]
-            },
-            {
-              title: "Cloud & DevOps",
-              items: [
-                "AWS",
-                "Docker",
-                "CI/CD (GitHub Actions, Jenkins)",
-                "Monitoring tools"
-              ]
-            },
-            {
-              title: "Ways of working",
-              items: [
-                "TDD",
-                "DDD",
-                "Hexagonal Architecture",
-                "Clean Code",
-                "Clean Architecture",
-                "SOLID",
-                "Production-ready deliverables with successful estimations",
-                "End-to-end objective development"
-              ]
-            }
-          ]
-        },
-        contact: {
-          title: "Need a senior engineer who can lead and deliver?",
-          description: "Let's discuss your roadmap, bottlenecks, or migration plan and define a practical path to execution.",
-          primary: "Email me",
-          secondary: "Copy email",
-          copied: "Email copied"
-        },
-        footer: "Built with performance and clarity in mind.",
-        toggles: {
-          langButton: "Switch language to Spanish",
-          themeDark: "Dark",
-          themeLight: "Light",
-          themeAriaDark: "Switch to dark mode",
-          themeAriaLight: "Switch to light mode"
-        },
-        imageAlt: "Portrait of Franco Fernández Lorio"
-      },
-      es: {
-        metaTitle: "Franco Fernández Lorio · Desarrollador Full-Stack Senior",
-        nav: {
-          about: "Sobre mí",
-          services: "Servicios",
-          projects: "Impacto",
-          contact: "Contacto"
-        },
-        hero: {
-          eyebrow: "Disponible para proyectos de alto impacto",
-          titleStart: "Construyo productos con",
-          titleGradient: "precisión de ingeniería senior",
-          description: "Senior Full-Stack Developer y Technical Lead con más de 9 años creando productos escalables usando Laravel, Vue, TypeScript y arquitectura serverless en AWS.",
-          primaryCta: "Iniciar proyecto",
-          secondaryCta: "Ver resultados",
-          availability: "Abierto a consultoría y liderazgo técnico por proyecto.",
-          cardRole: "Senior Full-Stack Developer · Technical Lead",
-          pills: ["Laravel", "Vue 2→3", "AWS", "CI/CD"],
-          miniStats: [
-            { value: "9+", label: "Años entregando productos" },
-            { value: "4", label: "Años liderando equipos" },
-            { value: "20+", label: "Integraciones complejas" }
-          ]
-        },
-        about: {
-          title: "Ejecución confiable con velocidad startup",
-          description: "Lidero ingeniería de producto de punta a punta, equilibrando calidad arquitectónica, velocidad de entrega y salud del equipo.",
-          stats: [
-            { value: "10M+", label: "Eventos procesados en producción" },
-            { value: "-45%", label: "Reducción de lead-time en flujos de entrega" },
-            { value: "99.9%", label: "Objetivos de disponibilidad en servicios críticos" },
-            { value: "5x", label: "Onboarding más rápido con estándares y playbooks" }
-          ]
-        },
-        services: {
-          title: "Cómo puedo ayudar a tu equipo",
-          description: "Modelo de colaboración flexible para delivery, arquitectura y liderazgo técnico.",
-          items: [
-            {
-              icon: "code",
-              title: "Delivery Full-Stack",
-              description: "Desarrollo end-to-end de features y productos con Laravel, Vue, TypeScript y buenas prácticas backend."
-            },
-            {
-              icon: "layers",
-              title: "Arquitectura y Modernización",
-              description: "Diagnóstico técnico, planes de escalabilidad, refactors estratégicos y migraciones desde código legacy."
-            },
-            {
-              icon: "link",
-              title: "Integraciones Complejas",
-              description: "WhatsApp API, Meta, bots de Slack, GraphQL y flujos event-driven con alta confiabilidad."
-            },
-            {
-              icon: "settings",
-              title: "AWS, CI/CD y DevOps",
-              description: "Infraestructura serverless, pipelines de despliegue, quality gates automatizados y observabilidad."
-            }
-          ]
-        },
-        projects: {
-          title: "Resultados destacados",
-          description: "Trabajo orientado a resultados en mensajería con IA, comunicación omnicanal e integraciones empresariales.",
-          items: [
-            {
-              title: "Integración de chatbots con IA en flujos de mensajería",
-              description: "Implementé capacidades de chatbot con inteligencia artificial dentro de flujos de mensajería operativos para mejorar automatización y calidad de respuesta.",
-              tags: ["IA", "Mensajería", "Automatización"]
-            },
-            {
-              title: "Funcionalidades integradas con WhatsApp API",
-              description: "Desarrollé funcionalidades de producto sobre integraciones con WhatsApp API, habilitando flujos de comunicación confiables en distintos puntos de contacto.",
-              tags: ["WhatsApp API", "Integraciones", "Producto"]
-            },
-            {
-              title: "Integraciones de APIs empresariales (Salesforce / HubSpot)",
-              description: "Construí y mantuve integraciones con plataformas grandes como Salesforce y HubSpot para sincronizar datos y procesos de negocio.",
-              tags: ["Salesforce", "HubSpot", "APIs"]
-            }
-          ]
-        },
-        stack: {
-          title: "Stack principal y toolkit de entrega",
-          description: "Tecnologías y prácticas de ingeniería que uso para entregar software productivo de punta a punta.",
-          groups: [
-            {
-              title: "Backend",
-              items: [
-                "PHP / Laravel",
-                "Node.js",
-                "TypeScript",
-                "REST APIs",
-                "Python",
-                "Bases de datos relacionales y no relacionales (MySQL, MongoDB, PostgreSQL, SQLite)"
-              ]
-            },
-            {
-              title: "Frontend",
-              items: [
-                "Vue.js (Vue 2 y Vue 3)",
-                "React",
-                "React Native",
-                "Angular",
-                "JavaScript",
-                "TypeScript",
-                "Tailwind CSS",
-                "CSS",
-                "HTML",
-                "jQuery"
-              ]
-            },
-            {
-              title: "Cloud y DevOps",
-              items: [
-                "AWS",
-                "Docker",
-                "CI/CD (GitHub Actions, Jenkins)",
-                "Herramientas de monitoreo"
-              ]
-            },
-            {
-              title: "Formas de trabajo",
-              items: [
-                "TDD",
-                "DDD",
-                "Arquitectura Hexagonal",
-                "Clean Code",
-                "Clean Architecture",
-                "SOLID",
-                "Entregables en producción con estimaciones exitosas",
-                "Desarrollo de objetivos de punta a punta"
-              ]
-            }
-          ]
-        },
-        contact: {
-          title: "¿Necesitás un senior que lidere y entregue?",
-          description: "Podemos revisar tu roadmap, cuellos de botella o plan de migración y definir un camino práctico de ejecución.",
-          primary: "Escribirme por email",
-          secondary: "Copiar email",
-          copied: "Email copiado"
-        },
-        footer: "Construido con foco en rendimiento y claridad.",
-        toggles: {
-          langButton: "Cambiar idioma a inglés",
-          themeDark: "Oscuro",
-          themeLight: "Claro",
-          themeAriaDark: "Cambiar a modo oscuro",
-          themeAriaLight: "Cambiar a modo claro"
-        },
-        imageAlt: "Foto de Franco Fernández Lorio"
-      }
-    };
-
-    const iconMap = {
-      code: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></svg>',
-      layers: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2l10 5-10 5L2 7l10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
-      link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 1 0-7.07-7.07L11 5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 1 0 7.07 7.07L13 19"/></svg>',
-      settings: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1 .6 1.65 1.65 0 0 0-.33 1.82V22a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-.33-1.82 1.65 1.65 0 0 0-1-.6 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-.6-1 1.65 1.65 0 0 0-1.82-.33H2a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.82-.33 1.65 1.65 0 0 0 .6-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-.6 1.65 1.65 0 0 0 .33-1.82V2a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 .33 1.82 1.65 1.65 0 0 0 1 .6 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.21.3.37.64.46 1a1.65 1.65 0 0 0 1.14 1.15H22a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.82.33c-.3.21-.64.37-1 .46z"/></svg>'
-    };
-
-    const nodes = {
-      langToggle: document.getElementById("langToggle"),
-      langLabel: document.getElementById("langLabel"),
-      themeToggle: document.getElementById("themeToggle"),
-      themeLabel: document.getElementById("themeLabel"),
-      themeIcon: document.getElementById("themeIcon"),
-      heroPills: document.getElementById("heroPills"),
-      miniStats: document.getElementById("miniStats"),
-      statsGrid: document.getElementById("statsGrid"),
-      servicesGrid: document.getElementById("servicesGrid"),
-      projectsGrid: document.getElementById("projectsGrid"),
-      stackGrid: document.getElementById("stackGrid"),
-      copyEmailBtn: document.getElementById("copyEmailBtn"),
-      footerText: document.getElementById("footerText"),
-      profileImage: document.getElementById("profileImage")
-    };
-
-    const themeIcons = {
-      dark: '<path d="M12 3a6.5 6.5 0 1 0 9 9A9 9 0 1 1 12 3z"/>',
-      light: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>'
-    };
-
-    const langStorageKey = "portfolio-language";
-    const themeStorageKey = "portfolio-theme";
-
-    function get(path, source) {
-      return path.split(".").reduce((acc, part) => acc && acc[part], source);
-    }
-
-    function renderArray(items, renderer) {
-      return items.map(renderer).join("");
-    }
-
-    function renderCards(lang) {
-      const content = dictionary[lang];
-
-      nodes.heroPills.innerHTML = renderArray(content.hero.pills, (pill) => `<span class="pill">${pill}</span>`);
-      nodes.miniStats.innerHTML = renderArray(
-        content.hero.miniStats,
-        (item) => `<article class="mini-stat"><strong>${item.value}</strong><span>${item.label}</span></article>`
-      );
-
-      nodes.statsGrid.innerHTML = renderArray(
-        content.about.stats,
-        (item) => `<article class="card stat-card"><h3>${item.value}</h3><p>${item.label}</p></article>`
-      );
-
-      nodes.servicesGrid.innerHTML = renderArray(
-        content.services.items,
-        (item) => `
-          <article class="card service-card">
-            <span class="icon-wrap" aria-hidden="true">${iconMap[item.icon] ?? iconMap.code}</span>
-            <h3>${item.title}</h3>
-            <p>${item.description}</p>
-          </article>`
-      );
-
-      nodes.projectsGrid.innerHTML = renderArray(
-        content.projects.items,
-        (item) => `
-          <article class="card project-card">
-            <h3>${item.title}</h3>
-            <p>${item.description}</p>
-            <div class="tag-list">${renderArray(item.tags, (tag) => `<span class="tag">${tag}</span>`)}</div>
-          </article>`
-      );
-
-      nodes.stackGrid.innerHTML = renderArray(
-        content.stack.groups,
-        (group) => `
-          <article class="stack-group">
-            <h3 class="stack-group-title">${group.title}</h3>
-            <div class="stack-group-grid">${renderArray(group.items, (item) => `<span class="stack-pill">${item}</span>`)}</div>
-          </article>`
-      );
-      nodes.profileImage.alt = content.imageAlt;
-      nodes.footerText.innerHTML = `© <span id="year">${new Date().getFullYear()}</span> Franco Fernández Lorio · ${content.footer}`;
-    }
-
-    function applyTranslations(lang) {
-      document.documentElement.lang = lang;
-      const content = dictionary[lang];
-      document.title = content.metaTitle;
-
-      document.querySelectorAll("[data-i18n]").forEach((node) => {
-        const key = node.getAttribute("data-i18n");
-        const value = get(key, content);
-        if (typeof value === "string") {
-          node.textContent = value;
-        }
-      });
-
-      nodes.langLabel.textContent = lang === "en" ? "ES" : "EN";
-      nodes.langToggle.setAttribute("aria-label", content.toggles.langButton);
-
-      renderCards(lang);
-      localStorage.setItem(langStorageKey, lang);
-    }
-
-    function applyTheme(theme) {
-      document.documentElement.setAttribute("data-theme", theme);
-      const lang = document.documentElement.lang in dictionary ? document.documentElement.lang : "en";
-      const content = dictionary[lang];
-      const isDark = theme === "dark";
-
-      nodes.themeLabel.textContent = isDark ? content.toggles.themeLight : content.toggles.themeDark;
-      nodes.themeToggle.setAttribute("aria-label", isDark ? content.toggles.themeAriaLight : content.toggles.themeAriaDark);
-      nodes.themeIcon.innerHTML = isDark ? themeIcons.light : themeIcons.dark;
-      document.querySelector('meta[name="theme-color"]').setAttribute("content", isDark ? "#020617" : "#f8fafc");
-
-      localStorage.setItem(themeStorageKey, theme);
-    }
-
-    function initialLanguage() {
-      const saved = localStorage.getItem(langStorageKey);
-      if (saved === "es" || saved === "en") {
-        return saved;
-      }
-      const browserLang = (navigator.language || "en").toLowerCase();
-      return browserLang.startsWith("es") ? "es" : "en";
-    }
-
-    function initialTheme() {
-      const saved = localStorage.getItem(themeStorageKey);
-      if (saved === "dark" || saved === "light") {
-        return saved;
-      }
-      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    }
-
-    nodes.langToggle.addEventListener("click", () => {
-      const next = document.documentElement.lang === "es" ? "en" : "es";
-      applyTranslations(next);
-      applyTheme(document.documentElement.getAttribute("data-theme") || "light");
-    });
-
-    nodes.themeToggle.addEventListener("click", () => {
-      const current = document.documentElement.getAttribute("data-theme");
-      const next = current === "dark" ? "light" : "dark";
-      applyTheme(next);
-    });
-
-    nodes.copyEmailBtn.addEventListener("click", async () => {
-      const lang = document.documentElement.lang in dictionary ? document.documentElement.lang : "en";
-      const buttonLabel = dictionary[lang].contact.secondary;
-      const copiedLabel = dictionary[lang].contact.copied;
-
-      try {
-        await navigator.clipboard.writeText(EMAIL);
-        nodes.copyEmailBtn.textContent = copiedLabel;
-        setTimeout(() => {
-          nodes.copyEmailBtn.textContent = buttonLabel;
-        }, 1600);
-      } catch (_error) {
-        window.location.href = `mailto:${EMAIL}`;
-      }
-    });
-
-    applyTranslations(initialLanguage());
-    applyTheme(initialTheme());
-  </script>
-</body>
+      </dialog>
+    </div>
+  </body>
 </html>
